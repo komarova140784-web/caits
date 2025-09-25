@@ -1,0 +1,837 @@
+/* Стили для блога */
+.blog-container {
+ padding: 20px;
+}
+
+.blog-post {
+ background: white;
+ margin: 20px 0;
+ padding: 20px;
+ border-radius: 8px;
+ box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.blog-post a {
+ color: #3498db;
+ text-decoration: none;
+}
+
+.blog-post a:hover {
+ text-decoration: underline;
+}
+
+/* Дополнительные стили для команды */
+.team-member {
+ display: flex;
+ align-items: center;
+ margin: 20px;
+}
+
+.team-member img {
+ width: 100px;
+ height: 100px;
+ border-radius: 50%;
+ object-fit: cover;
+ margin-right: 20px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+ .menu {
+ flex-direction: column;
+ }
+ 
+ .team-member {
+ flex-direction: column;
+ align-items: center;
+ }
+ 
+ .team-member img {
+ margin-bottom: 10px;
+ }
+}
+/* Дополнительные анимации */
+.animated-text {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease-out;
+}
+
+.animated-text.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Стили для карточек программ */
+.program-card {
+    background: white;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.program-card:hover {
+    transform: translateY(-5px);
+}
+
+.language {
+    position: fixed;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+}
+
+.language__img {
+    margin: 2px;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.language__img:hover,
+.language__img_active {
+    opacity: 1;
+}
+
+.skiptranslate {
+    display: none !important;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333; /* Цвет текста */
+}
+
+.main-menu {
+    background-color: #2c3e50;
+    padding: 15px 0;
+}
+
+.main-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.main-menu li {
+    margin: 0 15px;
+}
+
+.main-menu a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.main-menu a:hover {
+    color: #3498db;
+}
+
+.language-switcher {
+    margin-bottom: 20px;
+}
+
+.language-switcher button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: none;
+    background: #f0f0f0;
+    cursor: pointer;
+}
+
+.language-switcher button:hover {
+    background: #e0e0e0;
+}
+
+/* Стили для основного контента */
+main {
+    padding: 50px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Анимация появления */
+.background-image {
+ transition: background-color 0.5s ease;
+}
+
+/* Стили для кнопок меню */
+.main-menu a {
+ color: #fff;
+ text-decoration: none;
+ padding: 10px 20px;
+ transition: background-color 0.3s;
+}
+
+.main-menu a:hover {
+ background-color: rgba(0,0,0,0.2);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333; /* Цвет текста */
+}
+
+.blog-menu {
+    background-color: #2c3e50;
+    padding: 15px 0;
+}
+
+.blog-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.blog-menu li {
+    margin: 0 15px;
+}
+
+.blog-menu a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.blog-menu a:hover {
+    color: #3498db;
+}
+
+.language-switcher {
+    margin-bottom: 20px;
+}
+
+.language-switcher button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: none;
+    background: #f0f0f0;
+    cursor: pointer;
+}
+
+.language-switcher button:hover {
+    background: #e0e0e0;
+}
+
+/* Стили для основного контента */
+main {
+    padding: 50px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Анимация появления */
+.background-image {
+ transition: background-color 0.5s ease;
+}
+
+/* Стили для кнопок меню */
+.blog-menu a {
+ color: #fff;
+ text-decoration: none;
+ padding: 10px 20px;
+ transition: background-color 0.3s;
+}
+
+.blog-menu a:hover {
+ background-color: rgba(0,0,0,0.2);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333; /* Цвет текста */
+}
+
+.programs-menu {
+    background-color: #2c3e50;
+    padding: 15px 0;
+}
+
+.programs-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.programs-menu li {
+    margin: 0 15px;
+}
+
+.programs-menu a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.programs-menu a:hover {
+    color: #3498db;
+}
+
+.language-switcher {
+    margin-bottom: 20px;
+}
+
+.language-switcher button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: none;
+    background: #f0f0f0;
+    cursor: pointer;
+}
+
+.language-switcher button:hover {
+    background: #e0e0e0;
+}
+
+/* Стили для основного контента */
+main {
+    padding: 50px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Анимация появления */
+.background-image {
+ transition: background-color 0.5s ease;
+}
+
+/* Стили для кнопок меню */
+.programs-menu a {
+ color: #fff;
+ text-decoration: none;
+ padding: 10px 20px;
+ transition: background-color 0.3s;
+}
+
+.programs-menu a:hover {
+ background-color: rgba(0,0,0,0.2);
+}
+
+.main-menu a {
+  display: inline-block;
+  padding: 15px 25px;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+  /* Базовый стиль кнопки */
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.main-menu a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(45deg, #ff6b6b, #7579ff);
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.main-menu a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.main-menu a:hover::before {
+  transform: translateY(0);
+}
+
+/* Базовая настройка для анимации */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Применение к заголовкам и параграфам */
+main h1,
+main p {
+  margin-bottom: 20px;
+  animation-delay: 0.5s;
+}
+
+main p {
+  animation-delay: 1s;
+}
+
+
+.main-menu a {
+  display: inline-block;
+  padding: 18px 30px;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  
+  /* Базовый стиль кнопки */
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Эффект подсветки */
+.main-menu a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(45deg, #ff6b6b, #7579ff);
+  transform: scaleX(0);
+  transform-origin: bottom;
+  transition: transform 0.4s ease;
+}
+
+/* Эффект при наведении */
+.main-menu a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.main-menu a:hover::before {
+  transform: scaleX(1);
+}
+
+/* Эффект нажатия */
+.main-menu a:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Дополнительные эффекты */
+.main-menu a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.main-menu a:hover::after {
+  transform: translate(-50%, -50%) scale(1.2);
+  opacity: 1;
+}
+
+/* Анимация появления кнопок */
+.main-menu a {
+  animation: buttonAppear 0.6s ease-out forwards;
+}
+
+@keyframes buttonAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.programs-menu a {
+  display: inline-block;
+  padding: 18px 30px;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  
+  /* Базовый стиль кнопки */
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Эффект подсветки */
+.programs-menu a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(45deg, #ff6b6b, #7579ff);
+  transform: scaleX(0);
+  transform-origin: bottom;
+  transition: transform 0.4s ease;
+}
+
+/* Эффект при наведении */
+.programs-menu a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.programs-menu a:hover::before {
+  transform: scaleX(1);
+}
+
+/* Эффект нажатия */
+.programs-menu a:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Дополнительные эффекты */
+.programs-menu a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.programs-menu a:hover::after {
+  transform: translate(-50%, -50%) scale(1.2);
+  opacity: 1;
+}
+
+/* Анимация появления кнопок */
+.programs-menu a {
+  animation: buttonAppear 0.6s ease-out forwards;
+}
+
+@keyframes buttonAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.about-menu a {
+  display: inline-block;
+  padding: 18px 30px;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  
+  /* Базовый стиль кнопки */
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Эффект подсветки */
+.about-menu a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(45deg, #ff6b6b, #7579ff);
+  transform: scaleX(0);
+  transform-origin: bottom;
+  transition: transform 0.4s ease;
+}
+
+/* Эффект при наведении */
+.about-menu a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.about-menu a:hover::before {
+  transform: scaleX(1);
+}
+
+/* Эффект нажатия */
+.about-menu a:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Дополнительные эффекты */
+.about-menu a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.about-menu a:hover::after {
+  transform: translate(-50%, -50%) scale(1.2);
+  opacity: 1;
+}
+
+/* Анимация появления кнопок */
+.about-menu a {
+  animation: buttonAppear 0.6s ease-out forwards;
+}
+
+@keyframes buttonAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.blog-menu a {
+  display: inline-block;
+  padding: 18px 30px;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  
+  /* Базовый стиль кнопки */
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Эффект подсветки */
+.blog-menu a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(45deg, #ff6b6b, #7579ff);
+  transform: scaleX(0);
+  transform-origin: bottom;
+  transition: transform 0.4s ease;
+}
+
+/* Эффект при наведении */
+.blog-menu a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.blog-menu a:hover::before {
+  transform: scaleX(1);
+}
+
+/* Эффект нажатия */
+.blog-menu a:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Дополнительные эффекты */
+.blog-menu a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.blog-menu a:hover::after {
+  transform: translate(-50%, -50%) scale(1.2);
+  opacity: 1;
+}
+
+/* Анимация появления кнопок */
+.blog-menu a {
+  animation: buttonAppear 0.6s ease-out forwards;
+}
+
+@keyframes buttonAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.programs-menu a {
+  display: inline-block;
+  padding: 18px 30px;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  
+  /* Базовый стиль кнопки */
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Эффект подсветки */
+.programs-menu a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(45deg, #ff6b6b, #7579ff);
+  transform: scaleX(0);
+  transform-origin: bottom;
+  transition: transform 0.4s ease;
+}
+
+/* Эффект при наведении */
+.programs-menu a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.programs-menu a:hover::before {
+  transform: scaleX(1);
+}
+
+/* Эффект нажатия */
+.programs-menu a:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Дополнительные эффекты */
+.programs-menu a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.programs-menu a:hover::after {
+  transform: translate(-50%, -50%) scale(1.2);
+  opacity: 1;
+}
+
+/* Анимация появления кнопок */
+.programs-menu a {
+  animation: buttonAppear 0.6s ease-out forwards;
+}
+
+@keyframes buttonAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
