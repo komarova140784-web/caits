@@ -1,0 +1,1629 @@
+/* Стили для блога */
+.blog-container {
+ padding: 20px;
+}
+
+.blog-post {
+ background: white;
+ margin: 20px 0;
+ padding: 20px;
+ border-radius: 8px;
+ box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.blog-post a {
+ color: #3498db;
+ text-decoration: none;
+}
+
+.blog-post a:hover {
+ text-decoration: underline;
+}
+
+/* Дополнительные стили для команды */
+.team-member {
+ display: flex;
+ align-items: center;
+ margin: 20px;
+}
+
+.team-member img {
+ width: 100px;
+ height: 100px;
+ border-radius: 50%;
+ object-fit: cover;
+ margin-right: 20px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+ .menu {
+ flex-direction: column;
+ }
+ 
+ .team-member {
+ flex-direction: column;
+ align-items: center;
+ }
+ 
+ .team-member img {
+ margin-bottom: 10px;
+ }
+}
+/* Дополнительные анимации */
+.animated-text {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease-out;
+}
+
+.animated-text.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Стили для карточек программ */
+.program-card {
+    background: white;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.program-card:hover {
+    transform: translateY(-5px);
+}
+
+.language {
+    position: fixed;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+}
+
+.language__img {
+    margin: 2px;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.language__img:hover,
+.language__img_active {
+    opacity: 1;
+}
+
+.skiptranslate {
+    display: none !important;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333; /* Цвет текста */
+}
+
+.main-menu {
+    background-color: #2c3e50;
+    padding: 15px 0;
+}
+
+.main-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.main-menu li {
+    margin: 0 15px;
+}
+
+.main-menu a {
+    text-decoration: none;
+    color: #ff;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.main-menu a:hover {
+    color: #3498db;
+}
+
+.language-switcher {
+    margin-bottom: 20px;
+}
+
+.language-switcher button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: none;
+    background: #f0f0f0;
+    cursor: pointer;
+}
+
+.language-switcher button:hover {
+    background: #e0e0e0;
+}
+
+/* Стили для основного контента */
+main {
+    padding: 50px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Анимация появления */
+.background-image {
+ transition: background-color 1s ease;
+}
+
+/* Стили для кнопок меню */
+.main-menu a {
+ color: #fff;
+ text-decoration: none;
+ padding: 10px 20px;
+ transition: background-color 0.3s;
+}
+
+.main-menu a:hover {
+ background-color: rgba(0,0,0,0.2);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333; /* Цвет текста */
+}
+
+.blog-menu {
+    background-color: #2c3e50;
+    padding: 15px 0;
+}
+
+.blog-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.blog-menu li {
+    margin: 0 15px;
+}
+
+.blog-menu a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.blog-menu a:hover {
+    color: #3498db;
+}
+
+.language-switcher {
+    margin-bottom: 20px;
+}
+
+.language-switcher button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: none;
+    background: #f0f0f0;
+    cursor: pointer;
+}
+
+.language-switcher button:hover {
+    background: #e0e0e0;
+}
+
+/* Стили для основного контента */
+main {
+    padding: 50px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Анимация появления */
+.background-image {
+ transition: background-color 0.5s ease;
+}
+
+/* Стили для кнопок меню */
+.blog-menu a {
+ color: #fff;
+ text-decoration: none;
+ padding: 10px 20px;
+ transition: background-color 0.3s;
+}
+
+.blog-menu a:hover {
+ background-color: rgba(0,0,0,0.2);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333; /* Цвет текста */
+}
+
+.programs-menu {
+    background-color: #2c3e50;
+    padding: 15px 0;
+}
+
+.programs-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.programs-menu li {
+    margin: 0 15px;
+}
+
+.programs-menu a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.programs-menu a:hover {
+    color: #3498db;
+}
+
+.language-switcher {
+    margin-bottom: 20px;
+}
+
+.language-switcher button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: none;
+    background: #f0f0f0;
+    cursor: pointer;
+}
+
+.language-switcher button:hover {
+    background: #e0e0e0;
+}
+
+/* Стили для основного контента */
+main {
+    padding: 50px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Анимация появления */
+.background-image {
+ transition: background-color 0.5s ease;
+}
+
+/* Стили для кнопок меню */
+.programs-menu a {
+ color: #fff;
+ text-decoration: none;
+ padding: 10px 20px;
+ transition: background-color 0.3s;
+}
+
+.programs-menu a:hover {
+ background-color: rgba(0,0,0,0.2);
+}
+
+.main-menu a {
+  display: inline-block;
+  padding: 15px 25px;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+  /* Базовый стиль кнопки */
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.main-menu a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(45deg, #ff6b6b, #7579ff);
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.main-menu a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.main-menu a:hover::before {
+  transform: translateY(0);
+}
+
+/* Базовая настройка для анимации */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Применение к заголовкам и параграфам */
+main h1,
+main p {
+  margin-bottom: 20px;
+  animation-delay: 0.5s;
+}
+
+main p {
+  animation-delay: 1s;
+}
+
+
+.main-menu a {
+  display: inline-block;
+  padding: 18px 30px;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  
+  /* Базовый стиль кнопки */
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Эффект подсветки */
+.main-menu a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(45deg, #ff6b6b, #7579ff);
+  transform: scaleX(0);
+  transform-origin: bottom;
+  transition: transform 0.4s ease;
+}
+
+/* Эффект при наведении */
+.main-menu a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.main-menu a:hover::before {
+  transform: scaleX(1);
+}
+
+/* Эффект нажатия */
+.main-menu a:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Дополнительные эффекты */
+.main-menu a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.main-menu a:hover::after {
+  transform: translate(-50%, -50%) scale(1.2);
+  opacity: 1;
+}
+
+/* Анимация появления кнопок */
+.main-menu a {
+  animation: buttonAppear 0.6s ease-out forwards;
+}
+
+@keyframes buttonAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.programs-menu a {
+  display: inline-block;
+  padding: 18px 30px;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  
+  /* Базовый стиль кнопки */
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Эффект подсветки */
+.programs-menu a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(45deg, #ff6b6b, #7579ff);
+  transform: scaleX(0);
+  transform-origin: bottom;
+  transition: transform 0.4s ease;
+}
+
+/* Эффект при наведении */
+.programs-menu a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.programs-menu a:hover::before {
+  transform: scaleX(1);
+}
+
+/* Эффект нажатия */
+.programs-menu a:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Дополнительные эффекты */
+.programs-menu a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.programs-menu a:hover::after {
+  transform: translate(-50%, -50%) scale(1.2);
+  opacity: 1;
+}
+
+/* Анимация появления кнопок */
+.programs-menu a {
+  animation: buttonAppear 0.6s ease-out forwards;
+}
+
+@keyframes buttonAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.about-menu a {
+  display: inline-block;
+  padding: 18px 30px;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  
+  /* Базовый стиль кнопки */
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Эффект подсветки */
+.about-menu a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(45deg, #ff6b6b, #7579ff);
+  transform: scaleX(0);
+  transform-origin: bottom;
+  transition: transform 0.4s ease;
+}
+
+/* Эффект при наведении */
+.about-menu a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.about-menu a:hover::before {
+  transform: scaleX(1);
+}
+
+/* Эффект нажатия */
+.about-menu a:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Дополнительные эффекты */
+.about-menu a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.about-menu a:hover::after {
+  transform: translate(-50%, -50%) scale(1.2);
+  opacity: 1;
+}
+
+/* Анимация появления кнопок */
+.about-menu a {
+  animation: buttonAppear 0.6s ease-out forwards;
+}
+
+@keyframes buttonAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.blog-menu a {
+  display: inline-block;
+  padding: 18px 30px;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  
+  /* Базовый стиль кнопки */
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Эффект подсветки */
+.blog-menu a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(45deg, #ff6b6b, #7579ff);
+  transform: scaleX(0);
+  transform-origin: bottom;
+  transition: transform 0.4s ease;
+}
+
+/* Эффект при наведении */
+.blog-menu a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.blog-menu a:hover::before {
+  transform: scaleX(1);
+}
+
+/* Эффект нажатия */
+.blog-menu a:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Дополнительные эффекты */
+.blog-menu a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.blog-menu a:hover::after {
+  transform: translate(-50%, -50%) scale(1.2);
+  opacity: 1;
+}
+
+/* Анимация появления кнопок */
+.blog-menu a {
+  animation: buttonAppear 0.6s ease-out forwards;
+}
+
+@keyframes buttonAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.programs-menu a {
+  display: inline-block;
+  padding: 18px 30px;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  
+  /* Базовый стиль кнопки */
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Эффект подсветки */
+.programs-menu a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(45deg, #ff6b6b, #7579ff);
+  transform: scaleX(0);
+  transform-origin: bottom;
+  transition: transform 0.4s ease;
+}
+
+/* Эффект при наведении */
+.programs-menu a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.programs-menu a:hover::before {
+  transform: scaleX(1);
+}
+
+/* Эффект нажатия */
+.programs-menu a:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Дополнительные эффекты */
+.programs-menu a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.programs-menu a:hover::after {
+  transform: translate(-50%, -50%) scale(1.2);
+  opacity: 1;
+}
+
+/* Анимация появления кнопок */
+.programs-menu a {
+  animation: buttonAppear 0.6s ease-out forwards;
+}
+
+@keyframes buttonAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.background-image {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: url('background.png') no-repeat center center/cover;
+    background-size: cover;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Стили для header и main */
+header {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+main {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Стили для меню */
+.main-menu ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.main-menu a {
+    display: inline-block;
+    padding: 15px 25px;
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Стили для ссылок в теле страницы */
+main a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+main a:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Стили для параграфов */
+main p {
+    margin: 20px 0;
+    line-height: 1.8;
+    color: #fff;
+    font-size: 18px;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .background-image {
+        background-size: 100% auto;
+    }
+    
+    header, main {
+        padding: 15px;
+    }
+    
+    .main-menu ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .main-menu a {
+        margin: 5px;
+    }
+}
+
+/* Дополнительные эффекты для кнопок меню */
+.main-menu a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(45deg, #ff6b6b, #7579ff);
+    transform: scaleX(0);
+    transform-origin: bottom;
+    transition: transform 0.4s ease;
+}
+
+.main-menu a:hover::before {
+    transform: scaleX(1);
+}
+
+/* Эффект при наведении на весь блок меню */
+.main-menu {
+    perspective: 1000px;
+}
+
+.main-menu a:hover {
+    transform: translateY(-2px) rotateY(2deg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* Основной фон для блога */
+.background-image-blog {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('blog-background.png') no-repeat center center/cover;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/* Основной фон для блога */
+.background-image-blog {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('blog-background.png') no-repeat center center/cover;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+
+/* Стили для header и main */
+header {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+main {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Стили для меню */
+.blog-menu ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.blog-menu a {
+    display: inline-block;
+    padding: 15px 25px;
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Стили для ссылок в теле страницы */
+main a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+main a:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Стили для параграфов */
+main p {
+    margin: 20px 0;
+    line-height: 1.8;
+    color: #fff;
+    font-size: 18px;
+}
+
+/* Стили для блога */
+.blog-container {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.blog-post {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
+}
+
+.blog-post h3 {
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: 22px;
+}
+
+.blog-post .date {
+    color: #aaa;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+/* Продолжение стилей для блога */
+.blog-post p {
+ color: #fff;
+ font-size: 16px;
+ line-height: 1.8;
+ margin-bottom: 15px;
+}
+
+.blog-post::before {
+ content: '';
+ display: block;
+ width: 100%;
+ height: 4px;
+ background: linear-gradient(45deg, #ff6b6b, #7579ff);
+ margin-bottom: 20px;
+}
+
+/* Стили для меню блога */
+.blog-menu {
+ margin-bottom: 30px;
+}
+
+.blog-menu ul {
+ list-style: none;
+ padding: 0;
+ display: flex;
+ justify-content: center;
+ gap: 20px;
+}
+
+.blog-menu a {
+ display: inline-block;
+ padding: 15px 25px;
+ color: #fff;
+ text-decoration: none;
+ position: relative;
+ overflow: hidden;
+ border-radius: 10px;
+ background-color: rgba(255, 255, 255, 0.1);
+ transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Анимации для блога */
+.blog-post.fade-in {
+ opacity: 0;
+ transform: translateY(20px);
+ animation: blogFadeIn 1s ease-out forwards;
+}
+
+@keyframes blogFadeIn {
+ 0% {
+ opacity: 0;
+ transform: translateY(20px);
+ }
+ 100% {
+ opacity: 1;
+ transform: translateY(0);
+ }
+}
+
+/* Адаптивные стили для блога */
+@media (max-width: 768px) {
+ .blog-container {
+ padding: 15px;
+ }
+ 
+ .blog-post {
+ padding: 15px;
+ }
+ 
+ .blog-menu ul {
+ flex-wrap: wrap;
+ justify-content: center;
+ }
+ 
+ .blog-menu a {
+ margin: 5px;
+ }
+}
+
+/* Дополнительные эффекты */
+.blog-post:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.blog-post a {
+ color: #ff6b6b;
+ text-decoration: none;
+ transition: color 0.3s ease;
+}
+
+.blog-post a:hover {
+ color: #7579ff;
+}
+
+.blog-container {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.blog-post {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
+}
+
+.blog-post h3 {
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: 22px;
+}
+
+.blog-post .date {
+    color: #aaa;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+/* Продолжение стилей для блога */
+.blog-post p {
+ color: #fff;
+ font-size: 16px;
+ line-height: 1.8;
+ margin-bottom: 15px;
+}
+
+.blog-post::before {
+ content: '';
+ display: block;
+ width: 100%;
+ height: 4px;
+ background: linear-gradient(45deg, #ff6b6b, #7579ff);
+ margin-bottom: 20px;
+}
+
+
+/* Дополнительные эффекты */
+.blog-post:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.blog-post a {
+ color: #ff6b6b;
+ text-decoration: none;
+ transition: color 0.3s ease;
+}
+
+.blog-post a:hover {
+ color: #7579ff;
+}
+
+.programs-container {
+    padding: 20px;
+    color: #fff; /* Белый цвет текста */
+}
+
+.program-card {
+    background-color: rgba(0, 0, 0, 0.8); /* Полупрозрачный черный фон карточек */
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.program-card h3 {
+    margin-bottom: 10px;
+    color: #fff; /* Белый цвет заголовков */
+}
+
+.program-card a {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff; /* Белый цвет текста кнопок */
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 3px;
+    margin-top: 15px;
+}
+
+a:hover {
+    background-color: #0056b3;
+    text-decoration: none;
+}
+
+/* Дополнительные стили для лучшей читаемости */
+p {
+    color: #fff; /* Белый цвет для параграфов */
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+h2, h3 {
+    color: #fff; /* Белый цвет для заголовков */
+    margin-bottom: 20px;
+}
+
+/* Основные стили для контейнера программ */
+.programs-container {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-image: url('../images/background-programs.jpg'); /* Новое фоновое изображение */
+    background-size: cover;
+    background-position: center;
+}
+
+.program-card {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
+    position: relative;
+}
+
+.program-card h3 {
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: 22px;
+}
+
+.program-card .date {
+    color: #aaa;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+/* Стили для контента программ */
+.program-card p {
+    color: #fff;
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.program-card::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(45deg, #ff6b6b, #7579ff);
+    margin-bottom: 20px;
+}
+
+/* Стили для меню программ */
+.programs-menu {
+    margin-bottom: 30px;
+}
+
+.programs-menu ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.programs-menu a {
+    display: inline-block;
+    padding: 15px 25px;
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Анимации для программ */
+.program-card.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: programsFadeIn 1s ease-out forwards;
+}
+
+@keyframes programsFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .programs-container {
+        padding: 15px;
+    }
+    
+    .program-card {
+        padding: 15px;
+    }
+    
+    .programs-menu ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .programs-menu a {
+        margin: 5px;
+    }
+}
+
+/* Дополнительные эффекты */
+.program-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.program-card a {
+    color: #ff6b6b;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.program-card a:hover {
+    color: #7579ff;
+}
+
+.programs-image {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: url('background-programs.png') no-repeat center center/cover;
+    background-size: cover;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-container {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.about-post {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
+}
+
+.about-post h3 {
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: 22px;
+}
+
+.about-post .date {
+    color: #aaa;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+/* Продолжение стилей для блога */
+.about-post p {
+ color: #fff;
+ font-size: 16px;
+ line-height: 1.8;
+ margin-bottom: 15px;
+}
+
+.about-post::before {
+ content: '';
+ display: block;
+ width: 100%;
+ height: 4px;
+ background: linear-gradient(45deg, #ff6b6b, #7579ff);
+ margin-bottom: 20px;
+}
+
+/* Стили для меню блога */
+
+
+/* Анимации для блога */
+.about-post.fade-in {
+ opacity: 0;
+ transform: translateY(20px);
+ animation: blogFadeIn 1s ease-out forwards;
+}
+
+@keyframes blogFadeIn {
+ 0% {
+ opacity: 0;
+ transform: translateY(20px);
+ }
+ 100% {
+ opacity: 1;
+ transform: translateY(0);
+ }
+}
+
+/* Адаптивные стили для блога */
+@media (max-width: 768px) {
+ .about-container {
+ padding: 15px;
+ }
+ 
+ .about-post {
+ padding: 15px;
+ }
+ 
+ .about-menu ul {
+ flex-wrap: wrap;
+ justify-content: center;
+ }
+ 
+ .about-menu a {
+ margin: 5px;
+ }
+}
+
+/* Дополнительные эффекты */
+.about-post:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.about-post a {
+ color: #ff6b6b;
+ text-decoration: none;
+ transition: color 0.3s ease;
+}
+
+.about-post a:hover {
+ color: #7579ff;
+}
+
+.about-container {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.about-post {
+    margin-bottom: 40px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
+}
+
+.about-post h3 {
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: 22px;
+}
+
+.about-post .date {
+    color: #aaa;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+/* Продолжение стилей для блога */
+.about-post p {
+ color: #fff;
+ font-size: 16px;
+ line-height: 1.8;
+ margin-bottom: 15px;
+}
+
+.about-post::before {
+ content: '';
+ display: block;
+ width: 100%;
+ height: 4px;
+ background: linear-gradient(45deg, #ff6b6b, #7579ff);
+ margin-bottom: 20px;
+}
+
+/* Основной фон для блога */
+.background-image-about {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('background-about.png') no-repeat center center/cover;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/* Основной фон для блога */
+.background-image-about {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('background-about.png') no-repeat center center/cover;
+    background-size: cover;
+    background-attachment: fixed;
+}
