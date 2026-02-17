@@ -226,6 +226,11 @@
             display: block;
         }
 
+        @keyframes fadePage {
+            from { opacity: 0.2; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -729,6 +734,13 @@
         .notification.show {
             transform: translateY(0);
         }
+
+        .last-update {
+            font-size: 0.8rem;
+            color: #7f92b0;
+            margin-top: 1rem;
+            text-align: right;
+        }
     </style>
 </head>
 <body>
@@ -775,6 +787,7 @@
             <h2 style="font-size: 2.2rem; margin: 3rem 0 1rem; color: #b3d9ff;">▪ Руководство ГИБДД</h2>
             <div id="staffContainer" class="cards-grid"></div>
             <span class="read-only-indicator" id="readOnlyIndicator">👁️ Только для просмотра</span>
+            <div class="last-update" id="lastUpdateTime"></div>
         </div>
 
         <!-- Законы -->
@@ -854,8 +867,9 @@
 
     <script>
         (function() {
-            // ---------- КОНФИГУРАЦИЯ ----------
+            // ---------- КЛЮЧИ ХРАНЕНИЯ ----------
             const STORAGE_KEY = 'gibdd_portal_data';
+            const UPDATE_KEY = 'gibdd_last_update';
             const ADMIN_LOGIN = 'admin';
             const ADMIN_PASSWORD = 'admin5765';
             
@@ -887,7 +901,7 @@
             // ---------- СОСТОЯНИЕ ----------
             let database = JSON.parse(JSON.stringify(defaultData));
             let currentUser = null;
-            let lastUpdate = Date.now();
+            let lastUpdate = localStorage.getItem(UPDATE_KEY) || Date.now().toString();
             let myUpdate = false;
             let updateTimer = null;
 
@@ -901,6 +915,7 @@
             const readOnlyIndicator = document.getElementById('readOnlyIndicator');
             const lawsReadOnlyIndicator = document.getElementById('lawsReadOnlyIndicator');
             const charterReadOnlyIndicator = document.getElementById('charterReadOnlyIndicator');
+            const lastUpdateTime = document.getElementById('lastUpdateTime');
 
             // ---------- ЗАГРУЗКА ----------
             function loadData() {
@@ -914,16 +929,27 @@
                     } else {
                         saveData(false);
                     }
+                    
+                    // Обновляем время последнего обновления
+                    const storedUpdate = localStorage.getItem(UPDATE_KEY);
+                    if (storedUpdate) {
+                        lastUpdate = storedUpdate;
+                    }
                 } catch (e) {
                     console.error('Ошибка загрузки:', e);
                 }
                 renderAll();
+                updateLastUpdateTime();
             }
 
             // ---------- СОХРАНЕНИЕ ----------
             function saveData(notify = true) {
                 try {
                     localStorage.setItem(STORAGE_KEY, JSON.stringify(database));
+                    const newTime = Date.now().toString();
+                    localStorage.setItem(UPDATE_KEY, newTime);
+                    lastUpdate = newTime;
+                    
                     if (notify) {
                         myUpdate = true;
                         clearTimeout(updateTimer);
@@ -932,6 +958,7 @@
                         }, 1000);
                         showNotification('✅ Данные сохранены');
                     }
+                    updateLastUpdateTime();
                 } catch (e) {
                     console.error('Ошибка сохранения:', e);
                 }
@@ -946,19 +973,29 @@
                 }, 3000);
             }
 
+            // ---------- ОБНОВЛЕНИЕ ВРЕМЕНИ ----------
+            function updateLastUpdateTime() {
+                if (lastUpdateTime) {
+                    const date = new Date(parseInt(lastUpdate));
+                    lastUpdateTime.textContent = `Последнее обновление: ${date.toLocaleString()}`;
+                }
+            }
+
             // ---------- ПРОВЕРКА ОБНОВЛЕНИЙ ----------
             function checkUpdates() {
                 try {
-                    const saved = localStorage.getItem(STORAGE_KEY);
-                    if (saved) {
-                        const newData = JSON.parse(saved);
-                        if (JSON.stringify(newData) !== JSON.stringify(database)) {
-                            if (!myUpdate) {
-                                database = newData;
+                    const storedUpdate = localStorage.getItem(UPDATE_KEY);
+                    if (storedUpdate && storedUpdate !== lastUpdate) {
+                        if (!myUpdate) {
+                            const saved = localStorage.getItem(STORAGE_KEY);
+                            if (saved) {
+                                database = JSON.parse(saved);
                                 renderAll();
-                                showNotification('📢 Данные обновлены');
+                                showNotification('📢 Появились новые данные');
                             }
                         }
+                        lastUpdate = storedUpdate;
+                        updateLastUpdateTime();
                     }
                 } catch (e) {}
             }
@@ -979,21 +1016,21 @@
                     <a href="${database.forum.link}" target="_blank" class="forum-big-link">🚦 Перейти на форум</a>
                 `;
 
-                const staffHtml = database.staff.map(person => `
+                const staffHtml = database.staff.map((person, index) => `
                     <div class="person-card">
                         <div class="edit-badge">${currentUser ? '✎ Редактировать' : '👁️ Просмотр'}</div>
                         ${currentUser ? 
-                            `<input type="text" class="admin-input" value="${person.name}" placeholder="Имя" onchange="updateStaff(${database.staff.indexOf(person)}, 'name', this.value)">` :
+                            `<input type="text" class="admin-input" value="${person.name}" placeholder="Имя" onchange="window.updateStaff(${index}, 'name', this.value)">` :
                             `<h3>${person.name}</h3>`
                         }
                         ${currentUser ? 
-                            `<input type="text" class="admin-input" value="${person.rank}" placeholder="Ранг" onchange="updateStaff(${database.staff.indexOf(person)}, 'rank', this.value)">` :
+                            `<input type="text" class="admin-input" value="${person.rank}" placeholder="Ранг" onchange="window.updateStaff(${index}, 'rank', this.value)">` :
                             `<div class="rank">${person.rank}</div>`
                         }
                         ${currentUser ? 
                             `<div class="contact">
-                                <input type="text" class="admin-input" value="${person.contact}" placeholder="Контакт" onchange="updateStaff(${database.staff.indexOf(person)}, 'contact', this.value)">
-                                <input type="text" class="admin-input" value="${person.phone}" placeholder="Телефон" onchange="updateStaff(${database.staff.indexOf(person)}, 'phone', this.value)">
+                                <input type="text" class="admin-input" value="${person.contact}" placeholder="Контакт" onchange="window.updateStaff(${index}, 'contact', this.value)">
+                                <input type="text" class="admin-input" value="${person.phone}" placeholder="Телефон" onchange="window.updateStaff(${index}, 'phone', this.value)">
                             </div>` :
                             `<div class="contact">📨 ${person.contact}<br>📞 ${person.phone}</div>`
                         }
@@ -1001,6 +1038,17 @@
                 `).join('');
                 
                 document.getElementById('staffContainer').innerHTML = staffHtml;
+                
+                if (currentUser) {
+                    const saveBtn = document.createElement('button');
+                    saveBtn.className = 'save-btn';
+                    saveBtn.textContent = '💾 Сохранить изменения в руководстве';
+                    saveBtn.onclick = () => {
+                        saveData();
+                        showNotification('✅ Руководство сохранено');
+                    };
+                    document.getElementById('staffContainer').after(saveBtn);
+                }
             }
 
             function renderLaws() {
@@ -1008,9 +1056,9 @@
                 if (currentUser) {
                     container.innerHTML = `
                         <div class="law-tabs">
-                            <span class="law-tab active-law" onclick="showLawTab('uk')">УК РФ</span>
-                            <span class="law-tab" onclick="showLawTab('ak')">АК РФ</span>
-                            <span class="law-tab" onclick="showLawTab('pdd')">ПДД</span>
+                            <span class="law-tab active-law" onclick="window.showLawTab('uk')">УК РФ</span>
+                            <span class="law-tab" onclick="window.showLawTab('ak')">АК РФ</span>
+                            <span class="law-tab" onclick="window.showLawTab('pdd')">ПДД</span>
                         </div>
                         <div id="uk-tab" class="admin-edit-area">
                             <textarea id="ukText" class="admin-textarea">${database.laws.uk}</textarea>
@@ -1021,14 +1069,14 @@
                         <div id="pdd-tab" class="admin-edit-area" style="display: none;">
                             <textarea id="pddText" class="admin-textarea">${database.laws.pdd}</textarea>
                         </div>
-                        <button class="save-btn" onclick="saveLaws()">💾 Сохранить законы</button>
+                        <button class="save-btn" onclick="window.saveLaws()">💾 Сохранить законы</button>
                     `;
                 } else {
                     container.innerHTML = `
                         <div class="law-tabs">
-                            <span class="law-tab active-law" onclick="showLawView('uk')">УК РФ</span>
-                            <span class="law-tab" onclick="showLawView('ak')">АК РФ</span>
-                            <span class="law-tab" onclick="showLawView('pdd')">ПДД</span>
+                            <span class="law-tab active-law" onclick="window.showLawView('uk')">УК РФ</span>
+                            <span class="law-tab" onclick="window.showLawView('ak')">АК РФ</span>
+                            <span class="law-tab" onclick="window.showLawView('pdd')">ПДД</span>
                         </div>
                         <div id="uk-view" class="law-content active-law-content">${database.laws.uk.replace(/\n/g, '<br>')}</div>
                         <div id="ak-view" class="law-content">${database.laws.ak.replace(/\n/g, '<br>')}</div>
@@ -1042,9 +1090,9 @@
                 if (currentUser) {
                     container.innerHTML = `
                         <div class="law-tabs">
-                            <span class="law-tab active-law" onclick="showCharterTab('general')">Общие положения</span>
-                            <span class="law-tab" onclick="showCharterTab('ranks')">Ранги</span>
-                            <span class="law-tab" onclick="showCharterTab('rules')">Правила</span>
+                            <span class="law-tab active-law" onclick="window.showCharterTab('general')">Общие положения</span>
+                            <span class="law-tab" onclick="window.showCharterTab('ranks')">Ранги</span>
+                            <span class="law-tab" onclick="window.showCharterTab('rules')">Правила</span>
                         </div>
                         <div id="general-tab" class="admin-edit-area">
                             <textarea id="generalText" class="admin-textarea">${database.charter.general}</textarea>
@@ -1055,14 +1103,14 @@
                         <div id="rules-tab" class="admin-edit-area" style="display: none;">
                             <textarea id="rulesText" class="admin-textarea">${database.charter.rules}</textarea>
                         </div>
-                        <button class="save-btn" onclick="saveCharter()">💾 Сохранить устав</button>
+                        <button class="save-btn" onclick="window.saveCharter()">💾 Сохранить устав</button>
                     `;
                 } else {
                     container.innerHTML = `
                         <div class="law-tabs">
-                            <span class="law-tab active-law" onclick="showCharterView('general')">Общие положения</span>
-                            <span class="law-tab" onclick="showCharterView('ranks')">Ранги</span>
-                            <span class="law-tab" onclick="showCharterView('rules')">Правила</span>
+                            <span class="law-tab active-law" onclick="window.showCharterView('general')">Общие положения</span>
+                            <span class="law-tab" onclick="window.showCharterView('ranks')">Ранги</span>
+                            <span class="law-tab" onclick="window.showCharterView('rules')">Правила</span>
                         </div>
                         <div id="general-view" class="law-content active-law-content">${database.charter.general.replace(/\n/g, '<br>')}</div>
                         <div id="ranks-view" class="law-content">${database.charter.ranks.replace(/\n/g, '<br>')}</div>
@@ -1073,12 +1121,17 @@
 
             function renderApplications() {
                 const container = document.getElementById('applicationsList');
-                if (database.applications.length === 0) {
+                if (!database.applications || database.applications.length === 0) {
                     container.innerHTML = '<p style="color: #7f92b0;">Пока нет заявок</p>';
                     return;
                 }
 
-                container.innerHTML = database.applications.map(app => `
+                // Сортируем по дате (новые сверху)
+                const sortedApps = [...database.applications].sort((a, b) => {
+                    return new Date(b.date) - new Date(a.date);
+                });
+
+                container.innerHTML = sortedApps.map(app => `
                     <div class="app-card">
                         <div class="app-id">ID: ${app.id}</div>
                         <div class="app-header">
@@ -1094,7 +1147,7 @@
                         ` : ''}
                         ${currentUser ? `
                             <div class="app-actions">
-                                <button class="delete-app-btn" onclick="deleteApplication(${app.id})">🗑️ Удалить</button>
+                                <button class="delete-app-btn" onclick="window.deleteApplication(${app.id})">🗑️ Удалить</button>
                             </div>
                         ` : ''}
                     </div>
@@ -1103,22 +1156,35 @@
 
             // ---------- ФУНКЦИИ ДЛЯ АДМИНА ----------
             window.updateStaff = function(index, field, value) {
+                if (!currentUser) return;
                 database.staff[index][field] = value;
             };
 
             window.saveLaws = function() {
-                database.laws.uk = document.getElementById('ukText')?.value || database.laws.uk;
-                database.laws.ak = document.getElementById('akText')?.value || database.laws.ak;
-                database.laws.pdd = document.getElementById('pddText')?.value || database.laws.pdd;
+                if (!currentUser) return;
+                const ukEl = document.getElementById('ukText');
+                const akEl = document.getElementById('akText');
+                const pddEl = document.getElementById('pddText');
+                
+                if (ukEl) database.laws.uk = ukEl.value;
+                if (akEl) database.laws.ak = akEl.value;
+                if (pddEl) database.laws.pdd = pddEl.value;
+                
                 saveData();
                 renderLaws();
                 showNotification('✅ Законы сохранены');
             };
 
             window.saveCharter = function() {
-                database.charter.general = document.getElementById('generalText')?.value || database.charter.general;
-                database.charter.ranks = document.getElementById('ranksText')?.value || database.charter.ranks;
-                database.charter.rules = document.getElementById('rulesText')?.value || database.charter.rules;
+                if (!currentUser) return;
+                const generalEl = document.getElementById('generalText');
+                const ranksEl = document.getElementById('ranksText');
+                const rulesEl = document.getElementById('rulesText');
+                
+                if (generalEl) database.charter.general = generalEl.value;
+                if (ranksEl) database.charter.ranks = ranksEl.value;
+                if (rulesEl) database.charter.rules = rulesEl.value;
+                
                 saveData();
                 renderCharter();
                 showNotification('✅ Устав сохранен');
@@ -1163,16 +1229,16 @@
                     `;
                     document.getElementById('logoutBtn').addEventListener('click', logout);
                     
-                    readOnlyIndicator.textContent = '🔓 Режим редактирования';
-                    lawsReadOnlyIndicator.textContent = '🔓 Режим редактирования';
-                    charterReadOnlyIndicator.textContent = '🔓 Режим редактирования';
+                    if (readOnlyIndicator) readOnlyIndicator.textContent = '🔓 Режим редактирования';
+                    if (lawsReadOnlyIndicator) lawsReadOnlyIndicator.textContent = '🔓 Режим редактирования';
+                    if (charterReadOnlyIndicator) charterReadOnlyIndicator.textContent = '🔓 Режим редактирования';
                 } else {
                     authSection.innerHTML = '<button class="login-btn" id="showLoginBtn">🔑 Войти</button>';
                     document.getElementById('showLoginBtn').addEventListener('click', showAuthModal);
                     
-                    readOnlyIndicator.textContent = '👁️ Только для просмотра';
-                    lawsReadOnlyIndicator.textContent = '👁️ Только для просмотра';
-                    charterReadOnlyIndicator.textContent = '👁️ Только для просмотра';
+                    if (readOnlyIndicator) readOnlyIndicator.textContent = '👁️ Только для просмотра';
+                    if (lawsReadOnlyIndicator) lawsReadOnlyIndicator.textContent = '👁️ Только для просмотра';
+                    if (charterReadOnlyIndicator) charterReadOnlyIndicator.textContent = '👁️ Только для просмотра';
                 }
                 
                 renderAll();
@@ -1213,6 +1279,7 @@
                     database.applications = database.applications.filter(app => app.id !== id);
                     saveData();
                     renderApplications();
+                    showNotification('✅ Заявка удалена');
                 }
             };
 
@@ -1231,8 +1298,17 @@
             // ---------- ЧАТ ----------
             const chatMessages = document.getElementById('chatMessages');
             const chatInput = document.getElementById('chatInput');
-            
-            document.getElementById('sendChatBtn').addEventListener('click', () => {
+            const sendBtn = document.getElementById('sendChatBtn');
+
+            function addMessage(text, sender) {
+                const msg = document.createElement('div');
+                msg.className = `msg ${sender === 'user' ? 'user-msg' : 'bot-msg'}`;
+                msg.textContent = text;
+                chatMessages.appendChild(msg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            sendBtn.addEventListener('click', () => {
                 const text = chatInput.value.trim();
                 if (!text) return;
                 
@@ -1243,34 +1319,34 @@
                     let reply = 'Извините, я не совсем понял.';
                     const q = text.toLowerCase();
                     
-                    if (q.includes('привет')) reply = 'Здравствуйте! Чем помочь?';
-                    else if (q.includes('закон')) reply = 'Законы на вкладке "Законы".';
-                    else if (q.includes('устав')) reply = 'Устав на вкладке "Устав".';
-                    else if (q.includes('ранг')) reply = 'Ранги в разделе "Устав".';
-                    else if (q.includes('заявк')) reply = `Всего заявок: ${database.applications.length}`;
-                    else if (q.includes('сотрудник')) {
+                    if (q.includes('привет') || q.includes('здравствуйте')) {
+                        reply = 'Здравствуйте! Чем могу помочь?';
+                    } else if (q.includes('закон') || q.includes('ук') || q.includes('ак') || q.includes('пдд')) {
+                        reply = 'Законы можно найти на вкладке "Законы".';
+                    } else if (q.includes('устав') || q.includes('ранг') || q.includes('повышение')) {
+                        reply = 'Устав и система рангов на вкладке "Устав".';
+                    } else if (q.includes('заявк')) {
+                        reply = `Всего заявок: ${database.applications.length}`;
+                    } else if (q.includes('сотрудник') || q.includes('руководство')) {
                         reply = database.staff.map(s => `${s.name} - ${s.rank}`).join('\n');
+                    } else if (q.includes('форум')) {
+                        reply = database.forum.title;
+                    } else if (q.includes('спасибо')) {
+                        reply = 'Пожалуйста! Обращайтесь ещё.';
                     }
                     
                     addMessage(reply, 'bot');
                 }, 500);
             });
 
-            function addMessage(text, sender) {
-                const msg = document.createElement('div');
-                msg.className = `msg ${sender === 'user' ? 'user-msg' : 'bot-msg'}`;
-                msg.textContent = text;
-                chatMessages.appendChild(msg);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-
             chatInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') document.getElementById('sendChatBtn').click();
+                if (e.key === 'Enter') sendBtn.click();
             });
 
             // ---------- ЗАГРУЗКА ФАЙЛОВ ----------
             const fileInput = document.getElementById('fileInput');
             const fileList = document.getElementById('fileList');
+            const uploadArea = document.getElementById('fileUploadArea');
             let selectedFiles = [];
 
             function handleFiles(files) {
@@ -1287,7 +1363,7 @@
                         preview.className = 'file-preview';
                         preview.innerHTML = `
                             <img src="${e.target.result}">
-                            <div class="remove-file" onclick="removeFile(${index})">×</div>
+                            <div class="remove-file" onclick="window.removeFile(${index})">×</div>
                         `;
                         fileList.appendChild(preview);
                     };
@@ -1301,12 +1377,15 @@
             };
 
             fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
-            document.getElementById('fileUploadArea').addEventListener('click', () => fileInput.click());
-            document.getElementById('fileUploadArea').addEventListener('dragover', (e) => e.preventDefault());
-            document.getElementById('fileUploadArea').addEventListener('drop', (e) => {
-                e.preventDefault();
-                handleFiles(e.dataTransfer.files);
-            });
+            
+            if (uploadArea) {
+                uploadArea.addEventListener('click', () => fileInput.click());
+                uploadArea.addEventListener('dragover', (e) => e.preventDefault());
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    handleFiles(e.dataTransfer.files);
+                });
+            }
 
             // ---------- СОЗДАНИЕ ЗАЯВКИ ----------
             document.getElementById('submitAppBtn').addEventListener('click', () => {
@@ -1324,14 +1403,23 @@
                     reader.onload = (e) => resolve(e.target.result);
                     reader.readAsDataURL(file);
                 }))).then(images => {
-                    database.applications.unshift({
+                    const newApp = {
                         id: Date.now(),
-                        author, title, text, images,
+                        author: author,
+                        title: title,
+                        text: text,
+                        images: images,
                         date: new Date().toLocaleString()
-                    });
-                    
+                    };
+
+                    if (!database.applications) {
+                        database.applications = [];
+                    }
+
+                    database.applications.unshift(newApp);
                     saveData();
                     
+                    // Очистка формы
                     document.getElementById('appTitle').value = '';
                     document.getElementById('appText').value = '';
                     selectedFiles = [];
@@ -1348,7 +1436,7 @@
             }
 
             loadData();
-            setInterval(checkUpdates, 2000);
+            setInterval(checkUpdates, 1000); // Проверка каждую секунду
 
             // Обработчики авторизации
             document.getElementById('loginSubmitBtn').addEventListener('click', login);
