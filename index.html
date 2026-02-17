@@ -107,6 +107,12 @@
             color: #0b0e14;
         }
 
+        .login-btn.active {
+            background: #ffd700;
+            color: #0b0e14;
+        }
+
+        /* Модальное окно авторизации */
         .modal {
             display: none;
             position: fixed;
@@ -166,7 +172,9 @@
             padding: 1rem;
             color: white;
             font-weight: 700;
+            font-size: 1.1rem;
             cursor: pointer;
+            transition: 0.2s;
             margin-top: 1rem;
         }
 
@@ -214,6 +222,7 @@
             color: #ff6b6b;
         }
 
+        /* Контейнер */
         .container {
             max-width: 1300px;
             margin: 2rem auto;
@@ -222,6 +231,7 @@
             width: 100%;
         }
 
+        /* Страницы */
         .page {
             display: none;
             animation: fadePage 0.3s ease;
@@ -256,6 +266,7 @@
             transform: translateY(0);
         }
 
+        /* Карточки сотрудников */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -277,6 +288,7 @@
         .person-card:hover {
             border-color: #00a6ff;
             transform: translateY(-8px);
+            background: rgba(28, 38, 60, 0.9);
         }
 
         .person-card h3 {
@@ -289,6 +301,7 @@
         .person-card .rank {
             color: #ffd966;
             font-weight: 600;
+            letter-spacing: 0.5px;
             outline: none;
         }
 
@@ -318,6 +331,18 @@
             opacity: 1;
         }
 
+        .admin-edit-indicator {
+            background: rgba(255, 215, 0, 0.2);
+            border: 1px dashed #ffd700;
+            border-radius: 30px;
+            padding: 0.3rem 1rem;
+            display: inline-block;
+            font-size: 0.8rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        /* Приглашение */
         .invite-block {
             background: linear-gradient(145deg, #002766, #001c4d);
             border-radius: 48px;
@@ -344,8 +369,10 @@
         .forum-big-link:hover {
             background: #4fd5ff;
             transform: scale(1.02);
+            box-shadow: 0 15px 40px #0077ff;
         }
 
+        /* Законы */
         .laws-container {
             background: rgba(10, 18, 30, 0.8);
             border-radius: 40px;
@@ -369,12 +396,14 @@
             border-radius: 40px;
             font-weight: 700;
             cursor: pointer;
+            transition: 0.2s;
         }
 
         .law-tab.active-law {
             background: #0077ff;
             color: white;
             border-color: #00c3ff;
+            box-shadow: 0 0 20px #0077ff;
         }
 
         .law-content {
@@ -395,6 +424,16 @@
             display: block;
         }
 
+        .law-content[contenteditable="true"] {
+            outline: 2px dashed #ffd700;
+            cursor: text;
+        }
+
+        .law-content[contenteditable="true"]:hover {
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        /* Чат с ИИ */
         .ai-chat {
             background: #0f1a2b;
             border-radius: 40px;
@@ -421,6 +460,12 @@
             border-radius: 28px;
             line-height: 1.5;
             white-space: pre-wrap;
+            animation: slideMsg 0.2s;
+        }
+
+        @keyframes slideMsg {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .user-msg {
@@ -435,6 +480,7 @@
             background: #1e2a44;
             border: 1px solid #00a6ff;
             border-bottom-left-radius: 6px;
+            color: #f0f4ff;
         }
 
         .chat-input-area {
@@ -452,7 +498,13 @@
             border-radius: 50px;
             padding: 1rem 1.8rem;
             color: white;
+            font-size: 1rem;
             outline: none;
+        }
+
+        .chat-input-area input:focus {
+            border-color: #00c3ff;
+            box-shadow: 0 0 10px #0077ff66;
         }
 
         .chat-input-area button {
@@ -463,8 +515,17 @@
             font-weight: 700;
             color: white;
             cursor: pointer;
+            font-size: 1.1rem;
+            transition: 0.2s;
+            border: 1px solid #89e0ff;
         }
 
+        .chat-input-area button:hover {
+            background: #0077ff;
+            box-shadow: 0 0 20px #0077ff;
+        }
+
+        /* Панель заявок */
         .applications-panel {
             background: rgba(10, 18, 30, 0.8);
             border-radius: 40px;
@@ -491,9 +552,10 @@
             margin-bottom: 0.5rem;
             color: #b3d9ff;
             font-weight: 600;
+            font-size: 1.1rem;
         }
 
-        .form-group input,
+        .form-group input[type="text"],
         .form-group textarea {
             width: 100%;
             background: #1a253c;
@@ -501,7 +563,14 @@
             border-radius: 20px;
             padding: 1rem 1.5rem;
             color: white;
+            font-size: 1rem;
             outline: none;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group textarea:focus {
+            border-color: #00c3ff;
+            box-shadow: 0 0 10px #0077ff66;
         }
 
         .form-group textarea {
@@ -516,13 +585,15 @@
             padding: 2rem;
             text-align: center;
             cursor: pointer;
+            transition: 0.2s;
         }
 
         .file-upload-area:hover {
             border-color: #00c3ff;
+            background: #1a2a40;
         }
 
-        .file-upload-area input {
+        .file-upload-area input[type="file"] {
             display: none;
         }
 
@@ -540,6 +611,7 @@
             position: relative;
             width: 100px;
             height: 100px;
+            object-fit: cover;
             border: 1px solid #0077ff;
         }
 
@@ -563,6 +635,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            font-size: 14px;
             border: 2px solid white;
         }
 
@@ -574,14 +647,25 @@
             font-weight: 800;
             color: white;
             cursor: pointer;
+            font-size: 1.2rem;
+            transition: 0.2s;
+            border: 1px solid #89e0ff;
             width: 100%;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: #0077ff;
+            box-shadow: 0 0 30px #0077ff;
         }
 
         .submit-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            pointer-events: none;
         }
 
+        /* Лента заявок */
         .applications-forum {
             margin-top: 3rem;
         }
@@ -592,6 +676,7 @@
             padding: 1.5rem;
             margin-bottom: 1.5rem;
             border: 1px solid #0077ff60;
+            transition: 0.2s;
             position: relative;
         }
 
@@ -615,6 +700,7 @@
         .app-header {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-bottom: 1rem;
             flex-wrap: wrap;
             gap: 1rem;
@@ -624,6 +710,7 @@
         .app-author {
             color: #00c3ff;
             font-weight: 700;
+            font-size: 1.2rem;
         }
 
         .app-date {
@@ -648,6 +735,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
+            margin-top: 1rem;
         }
 
         .app-image {
@@ -657,10 +745,17 @@
             object-fit: cover;
             border: 2px solid #0077ff;
             cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .app-image:hover {
+            transform: scale(1.05);
+            border-color: #00c3ff;
         }
 
         .app-actions {
             display: flex;
+            gap: 0.5rem;
             margin-top: 1rem;
             justify-content: flex-end;
         }
@@ -673,11 +768,19 @@
             border-radius: 30px;
             font-weight: 600;
             cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.9rem;
         }
 
         .delete-app-btn:hover {
             background: #ff4444;
             color: white;
+        }
+
+        .delete-app-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            pointer-events: none;
         }
 
         .admin-badge {
@@ -686,7 +789,27 @@
             padding: 0.2rem 1rem;
             border-radius: 20px;
             font-size: 0.8rem;
+            font-weight: 600;
             margin-left: 1rem;
+        }
+
+        .download-json {
+            background: #1a253c;
+            border: 1px solid #0077ff;
+            border-radius: 40px;
+            padding: 0.8rem 2rem;
+            color: #b3d9ff;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+        }
+
+        .download-json:hover {
+            background: #0077ff20;
+            border-color: #00c3ff;
         }
 
         .save-btn {
@@ -700,8 +823,15 @@
             align-items: center;
             gap: 0.5rem;
             margin-left: 1rem;
+            transition: 0.2s;
         }
 
+        .save-btn:hover {
+            background: #00ff8820;
+            border-color: #00ff88;
+        }
+
+        /* Футер */
         .footer {
             text-align: center;
             padding: 2rem;
@@ -720,11 +850,23 @@
             border: 1px solid #00ff88;
             margin-bottom: 1rem;
         }
+
+        .read-only-indicator {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #334155;
+            border-radius: 30px;
+            padding: 0.3rem 1rem;
+            display: inline-block;
+            font-size: 0.8rem;
+            color: #a5b3d1;
+            margin-left: 1rem;
+        }
     </style>
 </head>
 <body>
     <div class="update-toast" id="updateToast">📢 Появились новые данные</div>
 
+    <!-- Модальное окно авторизации -->
     <div class="modal" id="authModal">
         <div class="modal-content">
             <h2 class="modal-title">🔐 Авторизация</h2>
@@ -746,6 +888,8 @@
                 <button class="nav-btn" data-page="charter">Устав</button>
                 <button class="nav-btn" data-page="ai">Помощник</button>
                 <button class="nav-btn" data-page="applications">Заявки</button>
+                
+                <!-- Кнопка входа/информация о пользователе -->
                 <div id="authSection">
                     <button class="login-btn" id="showLoginBtn">🔑 Войти</button>
                 </div>
@@ -754,81 +898,78 @@
     </header>
 
     <div class="container">
+        <!-- Главная -->
         <div id="main" class="page active-page">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
                 <div style="text-align: center; flex: 1;">
                     <h1 style="font-size: 3rem; background: linear-gradient(135deg, #89e0ff, #0066ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Госавтоинспекция</h1>
-                    <p style="color: #a5b3d1;">Служим закону, защищаем порядок на дорогах</p>
+                    <p style="color: #a5b3d1; font-size: 1.2rem;">Служим закону, защищаем порядок на дорогах</p>
                 </div>
-                <button class="save-btn" id="saveStaffBtn" style="display: none;">💾 Сохранить</button>
+                <button class="save-btn" id="saveStaffBtn" style="display: none;">💾 Сохранить изменения</button>
             </div>
 
+            <!-- Приглашение на форум -->
             <div id="inviteContainer" class="invite-block"></div>
 
-            <h2 style="font-size: 2.2rem; margin: 3rem 0 1rem; color: #b3d9ff;">▪ Руководство</h2>
+            <!-- Контакты Администрации (3 человека) -->
+            <h2 style="font-size: 2.2rem; margin: 3rem 0 1rem; color: #b3d9ff;">▪ Руководство ГИБДД</h2>
             <div id="staffContainer" class="cards-grid"></div>
             <div class="sync-status" id="syncStatus">🟢 Данные синхронизированы</div>
+            <span class="read-only-indicator" id="readOnlyIndicator">👁️ Только для просмотра</span>
         </div>
 
+        <!-- Законы -->
         <div id="laws" class="page">
-            <h2 style="font-size: 2.5rem; color: #b3d9ff; margin-bottom: 1.5rem;">📜 Кодексы</h2>
+            <h2 style="font-size: 2.5rem; color: #b3d9ff; margin-bottom: 1.5rem;">📜 Кодексы РОДИНА РП</h2>
             <div class="laws-container">
                 <div class="law-tabs">
                     <div class="law-tab active-law" data-law="uk">УК РФ</div>
                     <div class="law-tab" data-law="ak">АК РФ</div>
                     <div class="law-tab" data-law="pdd">ПДД</div>
                 </div>
-                <div id="ukContent" class="law-content active-law-content" contenteditable="true"></div>
-                <div id="akContent" class="law-content" contenteditable="true"></div>
-                <div id="pddContent" class="law-content" contenteditable="true"></div>
+                <div id="ukContent" class="law-content active-law-content"></div>
+                <div id="akContent" class="law-content"></div>
+                <div id="pddContent" class="law-content"></div>
             </div>
+            <span class="read-only-indicator" id="lawsReadOnlyIndicator">👁️ Только для просмотра</span>
         </div>
 
+        <!-- Устав -->
         <div id="charter" class="page">
-            <h2 style="font-size: 2.5rem; color: #b3d9ff; margin-bottom: 1.5rem;">📋 Устав</h2>
+            <h2 style="font-size: 2.5rem; color: #b3d9ff; margin-bottom: 1.5rem;">📋 Устав ГИБДД РОДИНА РП</h2>
             <div class="laws-container">
                 <div class="law-tabs">
                     <div class="law-tab active-law" data-charter="general">Общие положения</div>
-                    <div class="law-tab" data-charter="ranks">Ранги</div>
-                    <div class="law-tab" data-charter="rules">Правила</div>
+                    <div class="law-tab" data-charter="ranks">Ранги и повышение</div>
+                    <div class="law-tab" data-charter="rules">Правила и обязанности</div>
                 </div>
-                <div id="generalContent" class="law-content active-law-content" contenteditable="true">
-                    <h3 style="color: #ffd700;">Раздел 1. Общие положения</h3>
-                    <h4 style="color: #00c3ff; margin-top: 1.5rem;">Статья 1. Цели и задачи</h4>
-                    <p>1.1 ГИБДД обеспечивает безопасность дорожного движения.</p>
-                    <p>1.2 Основные задачи: соблюдение ПДД, профилактика правонарушений.</p>
-                </div>
-                <div id="ranksContent" class="law-content" contenteditable="true">
-                    <h3 style="color: #ffd700;">Раздел 2. Ранги</h3>
-                    <p>1 ранг - Стажёр</p>
-                    <p>2 ранг - Младший инспектор</p>
-                    <p>3 ранг - Инспектор</p>
-                </div>
-                <div id="rulesContent" class="law-content" contenteditable="true">
-                    <h3 style="color: #ffd700;">Раздел 3. Правила</h3>
-                    <p>Обязанности: знать законы, быть вежливым.</p>
-                    <p>Запреты: злоупотребление положением.</p>
-                </div>
+                <div id="generalContent" class="law-content active-law-content"></div>
+                <div id="ranksContent" class="law-content"></div>
+                <div id="rulesContent" class="law-content"></div>
             </div>
+            <span class="read-only-indicator" id="charterReadOnlyIndicator">👁️ Только для просмотра</span>
         </div>
 
+        <!-- ИИ Помощник -->
         <div id="ai" class="page">
-            <h2 style="font-size: 2.5rem; color: #b3d9ff; margin-bottom: 1rem;">🧠 Помощник</h2>
-            <div class="ai-chat">
+            <h2 style="font-size: 2.5rem; color: #b3d9ff; margin-bottom: 1rem;">🧠 Нейросеть-помощник</h2>
+            <div class="ai-chat" id="chatWidget">
                 <div class="chat-msgs" id="chatMessages">
-                    <div class="msg bot-msg">Здравствуйте! Я помощник ГИБДД. Спрашивайте о законах, уставе или заявках.</div>
+                    <div class="msg bot-msg">Здравствуйте! Я интеллектуальный помощник ГИБДД РОДИНА РП. Задайте любой вопрос о законах, уставе, рангах, штрафах, сотрудниках или работе сайта. Я постараюсь помочь!</div>
                 </div>
                 <div class="chat-input-area">
-                    <input type="text" id="chatInput" placeholder="Введите вопрос...">
+                    <input type="text" id="chatInput" placeholder="Введите ваш вопрос...">
                     <button id="sendChatBtn">Отправить</button>
                 </div>
             </div>
         </div>
 
+        <!-- Панель заявок -->
         <div id="applications" class="page">
-            <h2 style="font-size: 2.5rem; color: #b3d9ff; margin-bottom: 1rem;">📋 Заявки</h2>
+            <h2 style="font-size: 2.5rem; color: #b3d9ff; margin-bottom: 1rem;">📋 Панель заявок</h2>
             
             <div class="applications-panel">
+                <!-- Форма создания заявки (доступна всем) -->
                 <div class="app-form">
                     <h3 style="color: #00c3ff; margin-bottom: 1.5rem;">Создать заявку</h3>
                     
@@ -843,22 +984,23 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Текст</label>
+                        <label>Текст заявки</label>
                         <textarea id="appText" placeholder="Подробное описание..."></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Фото</label>
+                        <label>Фотографии (PNG, JPG)</label>
                         <div class="file-upload-area" id="fileUploadArea">
-                            <input type="file" id="fileInput" multiple accept="image/*">
-                            <p>👆 Нажмите или перетащите файлы</p>
+                            <input type="file" id="fileInput" multiple accept="image/png, image/jpeg, image/jpg">
+                            <p>👆 Нажмите или перетащите файлы сюда</p>
                             <div class="file-list" id="fileList"></div>
                         </div>
                     </div>
 
-                    <button class="submit-btn" id="submitAppBtn">📨 Отправить</button>
+                    <button class="submit-btn" id="submitAppBtn">📨 Отправить заявку</button>
                 </div>
 
+                <!-- Лента заявок (удалять может только админ) -->
                 <div class="applications-forum">
                     <h3 style="color: #00c3ff; margin-bottom: 1.5rem;">📌 Лента заявок</h3>
                     <div id="applicationsList"></div>
@@ -873,11 +1015,13 @@
 
     <script>
         (function() {
-            // Уникальный ключ для хранения
+            // ---------- КОНФИГУРАЦИЯ ----------
             const STORAGE_KEY = 'gibdd_portal_data';
             const UPDATE_KEY = 'gibdd_last_update';
+            const ADMIN_LOGIN = 'admin';
+            const ADMIN_PASSWORD = 'admin5765';
             
-            // База данных по умолчанию
+            // ---------- БАЗА ДАННЫХ ПО УМОЛЧАНИЮ ----------
             const defaultData = {
                 forum: {
                     title: "Официальный форум ГИБДД РОДИНА РП",
@@ -889,42 +1033,62 @@
                     { name: "Дмитрий Соколов", rank: "Зам. начальника", contact: "@sokolov", phone: "+7 (910) 765-43-21" },
                     { name: "Екатерина Волкова", rank: "Инспектор", contact: "@volkova", phone: "+7 (920) 555-22-33" }
                 ],
+                laws: {
+                    uk: "**Уголовный кодекс РФ**\n\nСтатья 158. Кража\nСтатья 264. Нарушение ПДД\nСтатья 319. Оскорбление представителя власти",
+                    ak: "**Административный кодекс**\n\nСтатья 12.6 - Ремни безопасности\nСтатья 12.8 - Нетрезвое вождение\nСтатья 12.9 - Превышение скорости",
+                    pdd: "**Правила дорожного движения**\n\n1. Скоростной режим: 60/90/110\n2. Поворотники обязательны\n3. Парковка запрещена"
+                },
+                charter: {
+                    general: "**Общие положения**\n\nСтатья 1. ГИБДД обеспечивает безопасность дорожного движения.\nСтатья 2. Основные задачи: соблюдение ПДД, профилактика.",
+                    ranks: "**Ранги и повышение**\n\n1 ранг - Стажёр\n2 ранг - Инспектор\n3 ранг - Лейтенант\n4 ранг - Капитан",
+                    rules: "**Правила и обязанности**\n\nОбязанности: знать законы, быть вежливым.\nЗапреты: злоупотребление положением."
+                },
                 applications: []
             };
 
-            // Загружаем данные
-            let database = { ...defaultData };
+            // ---------- СОСТОЯНИЕ ----------
+            let database = JSON.parse(JSON.stringify(defaultData));
             let lastUpdate = 0;
             let currentUser = null;
             let updateCheckInterval = null;
-            let isEditing = false;
+            let autoSaveTimer = null;
 
-            // Элементы
+            // ---------- ЭЛЕМЕНТЫ ----------
             const updateToast = document.getElementById('updateToast');
             const authModal = document.getElementById('authModal');
+            const showLoginBtn = document.getElementById('showLoginBtn');
             const loginInput = document.getElementById('loginInput');
             const passwordInput = document.getElementById('passwordInput');
+            const loginSubmitBtn = document.getElementById('loginSubmitBtn');
             const authError = document.getElementById('authError');
             const authSection = document.getElementById('authSection');
             const saveStaffBtn = document.getElementById('saveStaffBtn');
             const syncStatus = document.getElementById('syncStatus');
+            const readOnlyIndicator = document.getElementById('readOnlyIndicator');
+            const lawsReadOnlyIndicator = document.getElementById('lawsReadOnlyIndicator');
+            const charterReadOnlyIndicator = document.getElementById('charterReadOnlyIndicator');
 
-            // Загрузка сохраненных данных
+            // ---------- ЗАГРУЗКА ДАННЫХ ----------
             function loadData() {
                 try {
                     const saved = localStorage.getItem(STORAGE_KEY);
                     if (saved) {
                         database = JSON.parse(saved);
+                    } else {
+                        // Сохраняем данные по умолчанию при первом запуске
+                        database = JSON.parse(JSON.stringify(defaultData));
+                        saveData(false);
                     }
                     lastUpdate = Date.now();
                     localStorage.setItem(UPDATE_KEY, lastUpdate.toString());
                 } catch (e) {
                     console.error('Ошибка загрузки:', e);
+                    database = JSON.parse(JSON.stringify(defaultData));
                 }
                 renderAll();
             }
 
-            // Сохранение данных
+            // ---------- СОХРАНЕНИЕ ДАННЫХ ----------
             function saveData(showToast = true) {
                 try {
                     localStorage.setItem(STORAGE_KEY, JSON.stringify(database));
@@ -941,11 +1105,10 @@
                 }
             }
 
-            // Проверка обновлений
+            // ---------- ПРОВЕРКА ОБНОВЛЕНИЙ ----------
             function checkForUpdates() {
                 const storedUpdate = localStorage.getItem(UPDATE_KEY);
                 if (storedUpdate && parseInt(storedUpdate) > lastUpdate) {
-                    // Данные изменились в другом окне/вкладке
                     loadData();
                     updateToast.classList.add('show');
                     setTimeout(() => {
@@ -954,48 +1117,101 @@
                 }
             }
 
-            // Запускаем проверку обновлений каждые 2 секунды
+            // ---------- ЗАПУСК ПРОВЕРКИ ----------
             function startUpdateChecker() {
                 if (updateCheckInterval) clearInterval(updateCheckInterval);
                 updateCheckInterval = setInterval(checkForUpdates, 2000);
             }
 
-            // Рендер всего
-            function renderAll() {
-                renderMainPage();
-                renderApplications();
-                updateAuthUI();
+            // ---------- ОБНОВЛЕНИЕ UI В ЗАВИСИМОСТИ ОТ ПРАВ ----------
+            function updateUIPermissions() {
+                const isAdmin = !!currentUser;
+                
+                // Показываем/скрываем индикаторы режима
+                if (isAdmin) {
+                    readOnlyIndicator.style.display = 'none';
+                    lawsReadOnlyIndicator.style.display = 'none';
+                    charterReadOnlyIndicator.style.display = 'none';
+                    
+                    // Делаем законы и устав редактируемыми
+                    document.querySelectorAll('.law-content').forEach(el => {
+                        el.contentEditable = true;
+                    });
+                    
+                    // Показываем кнопку сохранения для сотрудников
+                    saveStaffBtn.style.display = 'inline-flex';
+                } else {
+                    readOnlyIndicator.style.display = 'inline-block';
+                    lawsReadOnlyIndicator.style.display = 'inline-block';
+                    charterReadOnlyIndicator.style.display = 'inline-block';
+                    
+                    // Делаем законы и устав только для чтения
+                    document.querySelectorAll('.law-content').forEach(el => {
+                        el.contentEditable = false;
+                    });
+                    
+                    // Скрываем кнопку сохранения
+                    saveStaffBtn.style.display = 'none';
+                }
+                
+                // Обновляем карточки сотрудников
+                renderStaffCards();
             }
 
-            // Рендер главной
-            function renderMainPage() {
-                document.getElementById('inviteContainer').innerHTML = `
-                    <h3 style="color:white; font-size: 2rem;">📢 ${database.forum.title}</h3>
-                    <p style="color:#cce5ff; margin-bottom: 1.5rem;">${database.forum.description}</p>
-                    <a href="${database.forum.link}" target="_blank" class="forum-big-link">🚦 Перейти на форум</a>
-                `;
-
+            // ---------- РЕНДЕР КАРТОЧЕК СОТРУДНИКОВ ----------
+            function renderStaffCards() {
                 const staffContainer = document.getElementById('staffContainer');
+                const isAdmin = !!currentUser;
+                
                 staffContainer.innerHTML = database.staff.map((person, index) => `
                     <div class="person-card">
-                        <div class="edit-badge">✎ Редактировать</div>
-                        <h3 class="staff-name" ${currentUser ? 'contenteditable="true"' : ''}>${person.name}</h3>
-                        <div class="rank staff-rank" ${currentUser ? 'contenteditable="true"' : ''}>${person.rank}</div>
-                        <div class="contact staff-contact" ${currentUser ? 'contenteditable="true"' : ''}>📨 ${person.contact}<br>📞 ${person.phone}</div>
+                        <div class="edit-badge">${isAdmin ? '✎ Редактировать' : '👁️ Просмотр'}</div>
+                        <h3 ${isAdmin ? 'contenteditable="true" class="staff-name"' : ''}>${person.name}</h3>
+                        <div class="rank" ${isAdmin ? 'contenteditable="true" class="staff-rank"' : ''}>${person.rank}</div>
+                        <div class="contact" ${isAdmin ? 'contenteditable="true" class="staff-contact"' : ''}>📨 ${person.contact}<br>📞 ${person.phone}</div>
                     </div>
                 `).join('');
             }
 
-            // Рендер заявок
+            // ---------- РЕНДЕР ВСЕХ ДАННЫХ ----------
+            function renderAll() {
+                // Форум
+                document.getElementById('inviteContainer').innerHTML = `
+                    <h3 style="color:white; font-size: 2rem; margin-bottom: 1rem;">📢 ${database.forum.title}</h3>
+                    <p style="color:#cce5ff; margin-bottom: 1.5rem;">${database.forum.description}</p>
+                    <a href="${database.forum.link}" target="_blank" class="forum-big-link">🚦 Перейти на форум</a>
+                `;
+
+                // Сотрудники
+                renderStaffCards();
+
+                // Законы
+                document.getElementById('ukContent').innerHTML = database.laws.uk.replace(/\n/g, '<br>');
+                document.getElementById('akContent').innerHTML = database.laws.ak.replace(/\n/g, '<br>');
+                document.getElementById('pddContent').innerHTML = database.laws.pdd.replace(/\n/g, '<br>');
+
+                // Устав
+                document.getElementById('generalContent').innerHTML = database.charter.general.replace(/\n/g, '<br>');
+                document.getElementById('ranksContent').innerHTML = database.charter.ranks.replace(/\n/g, '<br>');
+                document.getElementById('rulesContent').innerHTML = database.charter.rules.replace(/\n/g, '<br>');
+
+                // Заявки
+                renderApplications();
+
+                // Обновляем права
+                updateUIPermissions();
+            }
+
+            // ---------- РЕНДЕР ЗАЯВОК ----------
             function renderApplications() {
                 const container = document.getElementById('applicationsList');
-                if (!database.applications?.length) {
+                if (!database.applications || database.applications.length === 0) {
                     container.innerHTML = '<p style="color: #7f92b0;">Пока нет заявок</p>';
                     return;
                 }
 
                 container.innerHTML = database.applications.map(app => `
-                    <div class="app-card">
+                    <div class="app-card" data-app-id="${app.id}">
                         <div class="app-id">ID: ${app.id}</div>
                         <div class="app-header">
                             <span class="app-author">👤 ${app.author}</span>
@@ -1003,21 +1219,21 @@
                         </div>
                         <div class="app-title">${app.title}</div>
                         <div class="app-text">${app.text}</div>
-                        ${app.images?.length ? `
+                        ${app.images && app.images.length ? `
                             <div class="app-images">
                                 ${app.images.map(img => `<img src="${img}" class="app-image" onclick="window.open(this.src)">`).join('')}
                             </div>
                         ` : ''}
                         ${currentUser ? `
                             <div class="app-actions">
-                                <button class="delete-app-btn" onclick="deleteApplication(${app.id})">🗑️ Удалить</button>
+                                <button class="delete-app-btn" onclick="deleteApplication(${app.id})">🗑️ Удалить заявку</button>
                             </div>
                         ` : ''}
                     </div>
                 `).join('');
             }
 
-            // Авторизация
+            // ---------- АВТОРИЗАЦИЯ ----------
             function updateAuthUI() {
                 if (currentUser) {
                     authSection.innerHTML = `
@@ -1028,17 +1244,16 @@
                         </div>
                     `;
                     document.getElementById('logoutBtn').addEventListener('click', logout);
-                    saveStaffBtn.style.display = 'inline-flex';
                 } else {
                     authSection.innerHTML = '<button class="login-btn" id="showLoginBtn">🔑 Войти</button>';
                     document.getElementById('showLoginBtn').addEventListener('click', showAuthModal);
-                    saveStaffBtn.style.display = 'none';
                 }
                 
-                // Обновляем редактируемость
-                renderMainPage();
-                renderApplications();
-                document.getElementById('submitAppBtn').disabled = !currentUser;
+                // Обновляем UI с учетом прав
+                updateUIPermissions();
+                
+                // Кнопка отправки заявки доступна всем, но с проверкой
+                document.getElementById('submitAppBtn').disabled = false;
             }
 
             function showAuthModal() {
@@ -1053,9 +1268,12 @@
             }
 
             function login() {
-                if (loginInput.value.trim() === 'admin' && passwordInput.value.trim() === 'admin5765') {
-                    currentUser = 'admin';
-                    localStorage.setItem('gibdd_user', 'admin');
+                const login = loginInput.value.trim();
+                const password = passwordInput.value.trim();
+                
+                if (login === ADMIN_LOGIN && password === ADMIN_PASSWORD) {
+                    currentUser = login;
+                    localStorage.setItem('gibdd_user', login);
                     hideAuthModal();
                     updateAuthUI();
                 } else {
@@ -1069,8 +1287,10 @@
                 updateAuthUI();
             }
 
-            // Сохранение изменений сотрудников
+            // ---------- СОХРАНЕНИЕ ИЗМЕНЕНИЙ СОТРУДНИКОВ ----------
             function saveStaffChanges() {
+                if (!currentUser) return;
+                
                 const nameElements = document.querySelectorAll('.staff-name');
                 const rankElements = document.querySelectorAll('.staff-rank');
                 const contactElements = document.querySelectorAll('.staff-contact');
@@ -1083,191 +1303,325 @@
                 }));
                 
                 saveData();
-                alert('Изменения сохранены и видны всем!');
+                alert('Изменения в руководстве сохранены!');
             }
 
-            // Удаление заявки
+            // ---------- АВТОСОХРАНЕНИЕ ЗАКОНОВ И УСТАВА ----------
+            function setupAutoSave() {
+                const lawContents = ['ukContent', 'akContent', 'pddContent'];
+                const charterContents = ['generalContent', 'ranksContent', 'rulesContent'];
+                
+                [...lawContents, ...charterContents].forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.addEventListener('input', () => {
+                            if (!currentUser) return; // Только админ может сохранять
+                            
+                            if (autoSaveTimer) clearTimeout(autoSaveTimer);
+                            autoSaveTimer = setTimeout(() => {
+                                // Обновляем database из DOM
+                                if (lawContents.includes(id)) {
+                                    const lawKey = id.replace('Content', '');
+                                    database.laws[lawKey] = element.innerText.replace(/<br>/g, '\n');
+                                } else if (charterContents.includes(id)) {
+                                    const charterKey = id.replace('Content', '');
+                                    database.charter[charterKey] = element.innerText.replace(/<br>/g, '\n');
+                                }
+                                saveData();
+                                syncStatus.innerHTML = '🟢 Автосохранение...';
+                                setTimeout(() => {
+                                    syncStatus.innerHTML = '🟢 Данные синхронизированы';
+                                }, 1000);
+                            }, 1500);
+                        });
+                    }
+                });
+            }
+
+            // ---------- УДАЛЕНИЕ ЗАЯВКИ ----------
             window.deleteApplication = function(appId) {
                 if (!currentUser) return;
-                if (confirm('Удалить заявку?')) {
-                    database.applications = database.applications.filter(a => a.id !== appId);
+                
+                if (confirm('Вы уверены, что хотите удалить заявку?')) {
+                    database.applications = database.applications.filter(app => app.id !== appId);
                     saveData();
                     renderApplications();
                 }
             };
 
-            // Навигация
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-                    document.getElementById(btn.dataset.page)?.classList.add('active-page');
-                    btn.classList.add('active');
-                });
-            });
-
-            // Законы
-            document.querySelectorAll('[data-law]').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    document.querySelectorAll('[data-law]').forEach(t => t.classList.remove('active-law'));
-                    document.querySelectorAll('.law-content').forEach(c => c.classList.remove('active-law-content'));
-                    tab.classList.add('active-law');
-                    document.getElementById(tab.dataset.law + 'Content')?.classList.add('active-law-content');
-                });
-            });
-
-            // Устав
-            document.querySelectorAll('[data-charter]').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    document.querySelectorAll('[data-charter]').forEach(t => t.classList.remove('active-law'));
-                    document.querySelectorAll('.law-content').forEach(c => c.classList.remove('active-law-content'));
-                    tab.classList.add('active-law');
-                    document.getElementById(tab.dataset.charter + 'Content')?.classList.add('active-law-content');
-                });
-            });
-
-            // Автосохранение законов и устава
-            document.querySelectorAll('[contenteditable="true"]').forEach(el => {
-                el.addEventListener('input', () => {
-                    if (!isEditing) {
-                        isEditing = true;
-                        clearTimeout(window.editTimer);
-                        window.editTimer = setTimeout(() => {
-                            saveData();
-                            isEditing = false;
-                        }, 2000);
-                    }
-                });
-            });
-
-            // Чат
-            const chatMessages = document.getElementById('chatMessages');
-            const chatInput = document.getElementById('chatInput');
-            
-            function addMessage(text, sender) {
-                const msgDiv = document.createElement('div');
-                msgDiv.className = `msg ${sender === 'user' ? 'user-msg' : 'bot-msg'}`;
-                msgDiv.textContent = text;
-                chatMessages.appendChild(msgDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-
-            function getBotReply(question) {
-                const q = question.toLowerCase();
+            // ---------- НАВИГАЦИЯ ----------
+            function setupNavigation() {
+                const pages = {
+                    main: document.getElementById('main'),
+                    laws: document.getElementById('laws'),
+                    charter: document.getElementById('charter'),
+                    ai: document.getElementById('ai'),
+                    applications: document.getElementById('applications')
+                };
                 
-                if (q.includes('привет')) return 'Здравствуйте! Чем помочь?';
-                if (q.includes('закон')) return 'Законы на вкладке "Законы"';
-                if (q.includes('устав')) return 'Устав на вкладке "Устав"';
-                if (q.includes('заявк')) return `Всего заявок: ${database.applications.length}`;
-                if (q.includes('сотрудник')) {
-                    return database.staff.map(s => `${s.name} - ${s.rank}`).join('\n');
-                }
-                return 'Я могу рассказать о законах, уставе, заявках и сотрудниках.';
-            }
-
-            document.getElementById('sendChatBtn').addEventListener('click', () => {
-                const text = chatInput.value.trim();
-                if (!text) return;
-                addMessage(text, 'user');
-                chatInput.value = '';
-                setTimeout(() => addMessage(getBotReply(text), 'bot'), 500);
-            });
-
-            chatInput.addEventListener('keypress', e => e.key === 'Enter' && document.getElementById('sendChatBtn').click());
-
-            // Загрузка файлов
-            const fileInput = document.getElementById('fileInput');
-            const fileList = document.getElementById('fileList');
-            let selectedFiles = [];
-
-            function handleFiles(files) {
-                selectedFiles = [...selectedFiles, ...Array.from(files).filter(f => f.type.startsWith('image/'))];
-                renderFilePreviews();
-            }
-
-            function renderFilePreviews() {
-                fileList.innerHTML = '';
-                selectedFiles.forEach((file, index) => {
-                    const reader = new FileReader();
-                    reader.onload = e => {
-                        const preview = document.createElement('div');
-                        preview.className = 'file-preview';
-                        preview.innerHTML = `
-                            <img src="${e.target.result}">
-                            <div class="remove-file" data-index="${index}">×</div>
-                        `;
-                        fileList.appendChild(preview);
-                        preview.querySelector('.remove-file').addEventListener('click', () => {
-                            selectedFiles.splice(index, 1);
-                            renderFilePreviews();
-                        });
-                    };
-                    reader.readAsDataURL(file);
-                });
-            }
-
-            fileInput.addEventListener('change', e => handleFiles(e.target.files));
-            document.getElementById('fileUploadArea').addEventListener('click', () => fileInput.click());
-            document.getElementById('fileUploadArea').addEventListener('dragover', e => e.preventDefault());
-            document.getElementById('fileUploadArea').addEventListener('drop', e => {
-                e.preventDefault();
-                handleFiles(e.dataTransfer.files);
-            });
-
-            // Создание заявки
-            document.getElementById('submitAppBtn').addEventListener('click', () => {
-                const author = document.getElementById('appAuthor').value.trim() || 'Гость';
-                const title = document.getElementById('appTitle').value.trim();
-                const text = document.getElementById('appText').value.trim();
-
-                if (!title || !text) {
-                    alert('Заполните заголовок и текст');
-                    return;
-                }
-
-                Promise.all(selectedFiles.map(file => new Promise(resolve => {
-                    const reader = new FileReader();
-                    reader.onload = e => resolve(e.target.result);
-                    reader.readAsDataURL(file);
-                }))).then(images => {
-                    database.applications.unshift({
-                        id: Date.now(),
-                        author, title, text, images,
-                        date: new Date().toLocaleString()
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const pageId = btn.dataset.page;
+                        if (!pageId) return;
+                        
+                        Object.values(pages).forEach(p => p?.classList.remove('active-page'));
+                        pages[pageId]?.classList.add('active-page');
+                        
+                        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
                     });
-                    
-                    saveData();
-                    
-                    document.getElementById('appTitle').value = '';
-                    document.getElementById('appText').value = '';
-                    selectedFiles = [];
-                    renderFilePreviews();
-                    renderApplications();
-                    alert('Заявка создана!');
                 });
-            });
-
-            // Обработчики авторизации
-            document.getElementById('loginSubmitBtn').addEventListener('click', login);
-            loginInput.addEventListener('keypress', e => e.key === 'Enter' && login());
-            passwordInput.addEventListener('keypress', e => e.key === 'Enter' && login());
-            authModal.addEventListener('click', e => e.target === authModal && hideAuthModal());
-
-            // Сохранение сотрудников
-            saveStaffBtn.addEventListener('click', saveStaffChanges);
-
-            // Инициализация
-            if (localStorage.getItem('gibdd_user')) {
-                currentUser = localStorage.getItem('gibdd_user');
             }
 
-            loadData();
-            startUpdateChecker();
+            // ---------- ВКЛАДКИ ЗАКОНОВ ----------
+            function setupLawTabs() {
+                const lawTabs = document.querySelectorAll('[data-law]');
+                const lawContents = {
+                    uk: document.getElementById('ukContent'),
+                    ak: document.getElementById('akContent'),
+                    pdd: document.getElementById('pddContent')
+                };
 
-            // Очистка интервала при уходе
-            window.addEventListener('beforeunload', () => {
-                if (updateCheckInterval) clearInterval(updateCheckInterval);
-            });
+                lawTabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        lawTabs.forEach(t => t.classList.remove('active-law'));
+                        tab.classList.add('active-law');
+                        
+                        Object.values(lawContents).forEach(c => c?.classList.remove('active-law-content'));
+                        lawContents[tab.dataset.law]?.classList.add('active-law-content');
+                    });
+                });
+            }
+
+            // ---------- ВКЛАДКИ УСТАВА ----------
+            function setupCharterTabs() {
+                const charterTabs = document.querySelectorAll('[data-charter]');
+                const charterContents = {
+                    general: document.getElementById('generalContent'),
+                    ranks: document.getElementById('ranksContent'),
+                    rules: document.getElementById('rulesContent')
+                };
+
+                charterTabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        charterTabs.forEach(t => t.classList.remove('active-law'));
+                        tab.classList.add('active-law');
+                        
+                        Object.values(charterContents).forEach(c => c?.classList.remove('active-law-content'));
+                        charterContents[tab.dataset.charter]?.classList.add('active-law-content');
+                    });
+                });
+            }
+
+            // ---------- ЧАТ ----------
+            function setupChat() {
+                const chatMessages = document.getElementById('chatMessages');
+                const chatInput = document.getElementById('chatInput');
+                const sendBtn = document.getElementById('sendChatBtn');
+
+                function addMessage(text, sender) {
+                    const msgDiv = document.createElement('div');
+                    msgDiv.className = `msg ${sender === 'user' ? 'user-msg' : 'bot-msg'}`;
+                    msgDiv.textContent = text;
+                    chatMessages.appendChild(msgDiv);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+
+                function getBotReply(question) {
+                    const q = question.toLowerCase().trim();
+                    
+                    if (q.includes('привет') || q.includes('здравствуйте')) {
+                        return 'Здравствуйте! Я помощник ГИБДД. Чем могу помочь?';
+                    }
+                    
+                    if (q.includes('закон') || q.includes('ук') || q.includes('ак') || q.includes('пдд')) {
+                        return 'Законы можно найти на вкладке "Законы". Там есть УК, АК и ПДД.';
+                    }
+                    
+                    if (q.includes('устав') || q.includes('ранг') || q.includes('повышение')) {
+                        return 'Устав и система рангов на вкладке "Устав".';
+                    }
+                    
+                    if (q.includes('сотрудник') || q.includes('руководство')) {
+                        return database.staff.map(s => `${s.name} - ${s.rank}`).join('\n');
+                    }
+                    
+                    if (q.includes('заявк')) {
+                        return `Всего заявок: ${database.applications.length}`;
+                    }
+                    
+                    if (q.includes('форум')) {
+                        return database.forum.title + ': ' + database.forum.link;
+                    }
+                    
+                    if (q.includes('спасибо')) {
+                        return 'Пожалуйста! Обращайтесь ещё.';
+                    }
+                    
+                    return 'Я могу рассказать о законах, уставе, рангах, сотрудниках и заявках. Что вас интересует?';
+                }
+
+                sendBtn.addEventListener('click', () => {
+                    const text = chatInput.value.trim();
+                    if (!text) return;
+                    
+                    addMessage(text, 'user');
+                    chatInput.value = '';
+                    
+                    setTimeout(() => {
+                        const reply = getBotReply(text);
+                        addMessage(reply, 'bot');
+                    }, 500);
+                });
+
+                chatInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') sendBtn.click();
+                });
+            }
+
+            // ---------- ЗАГРУЗКА ФАЙЛОВ ----------
+            function setupFileUpload() {
+                const fileInput = document.getElementById('fileInput');
+                const fileList = document.getElementById('fileList');
+                const uploadArea = document.getElementById('fileUploadArea');
+                let selectedFiles = [];
+
+                function handleFiles(files) {
+                    const imageFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+                    selectedFiles = [...selectedFiles, ...imageFiles];
+                    renderFilePreviews();
+                }
+
+                function renderFilePreviews() {
+                    fileList.innerHTML = '';
+                    selectedFiles.forEach((file, index) => {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const previewDiv = document.createElement('div');
+                            previewDiv.className = 'file-preview';
+                            previewDiv.innerHTML = `
+                                <img src="${e.target.result}" alt="preview">
+                                <div class="remove-file" data-index="${index}">×</div>
+                            `;
+                            fileList.appendChild(previewDiv);
+                            
+                            previewDiv.querySelector('.remove-file').addEventListener('click', function() {
+                                selectedFiles.splice(index, 1);
+                                renderFilePreviews();
+                            });
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
+
+                fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+                
+                uploadArea.addEventListener('click', () => fileInput.click());
+                
+                uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadArea.style.background = '#1a2a40';
+                });
+                
+                uploadArea.addEventListener('dragleave', () => {
+                    uploadArea.style.background = '#0f1a2b';
+                });
+                
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadArea.style.background = '#0f1a2b';
+                    handleFiles(Array.from(e.dataTransfer.files));
+                });
+
+                // Отправка заявки
+                document.getElementById('submitAppBtn').addEventListener('click', () => {
+                    const author = document.getElementById('appAuthor').value.trim() || 'Гость';
+                    const title = document.getElementById('appTitle').value.trim();
+                    const text = document.getElementById('appText').value.trim();
+
+                    if (!title || !text) {
+                        alert('Заполните заголовок и текст заявки');
+                        return;
+                    }
+
+                    const imagePromises = selectedFiles.map(file => {
+                        return new Promise((resolve) => {
+                            const reader = new FileReader();
+                            reader.onload = (e) => resolve(e.target.result);
+                            reader.readAsDataURL(file);
+                        });
+                    });
+
+                    Promise.all(imagePromises).then(images => {
+                        const newApp = {
+                            id: Date.now(),
+                            author: author,
+                            title: title,
+                            text: text,
+                            images: images,
+                            date: new Date().toLocaleString()
+                        };
+
+                        if (!database.applications) {
+                            database.applications = [];
+                        }
+
+                        database.applications.unshift(newApp);
+                        saveData();
+                        
+                        document.getElementById('appTitle').value = '';
+                        document.getElementById('appText').value = '';
+                        selectedFiles = [];
+                        renderFilePreviews();
+                        renderApplications();
+                        
+                        alert('Заявка создана!');
+                    });
+                });
+            }
+
+            // ---------- ИНИЦИАЛИЗАЦИЯ ----------
+            function init() {
+                // Загружаем данные
+                loadData();
+                
+                // Проверяем сохраненную сессию
+                if (localStorage.getItem('gibdd_user')) {
+                    currentUser = localStorage.getItem('gibdd_user');
+                }
+                
+                // Настраиваем интерфейс
+                setupNavigation();
+                setupLawTabs();
+                setupCharterTabs();
+                setupChat();
+                setupFileUpload();
+                setupAutoSave();
+                
+                // Обновляем UI авторизации
+                updateAuthUI();
+                
+                // Запускаем проверку обновлений
+                startUpdateChecker();
+                
+                // Обработчики авторизации
+                if (showLoginBtn) showLoginBtn.addEventListener('click', showAuthModal);
+                loginSubmitBtn.addEventListener('click', login);
+                loginInput.addEventListener('keypress', (e) => e.key === 'Enter' && login());
+                passwordInput.addEventListener('keypress', (e) => e.key === 'Enter' && login());
+                authModal.addEventListener('click', (e) => e.target === authModal && hideAuthModal());
+                
+                // Сохранение сотрудников
+                saveStaffBtn.addEventListener('click', saveStaffChanges);
+                
+                // Очистка интервала при уходе
+                window.addEventListener('beforeunload', () => {
+                    if (updateCheckInterval) clearInterval(updateCheckInterval);
+                });
+            }
+
+            // Запуск
+            init();
         })();
     </script>
 </body>
