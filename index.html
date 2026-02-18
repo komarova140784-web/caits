@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ГИБДД РОДИНА РП | Мгновенная синхронизация</title>
+    <title>ГИБДД РОДИНА РП | Облачная синхронизация</title>
     <style>
-        /* Все стили без изменений */
         * {
             margin: 0;
             padding: 0;
@@ -471,10 +470,6 @@
             outline: none;
         }
 
-        .chat-input-area input:focus {
-            border-color: #00c3ff;
-        }
-
         .chat-input-area button {
             background: linear-gradient(145deg, #00c3ff, #0066ff);
             border: none;
@@ -595,7 +590,6 @@
             color: white;
             cursor: pointer;
             width: 100%;
-            font-size: 1.2rem;
         }
 
         .applications-forum {
@@ -741,7 +735,7 @@
             transform: translateY(0);
         }
 
-        .sync-status {
+        .cloud-status {
             background: rgba(255, 215, 0, 0.1);
             border: 1px solid #ffd700;
             border-radius: 30px;
@@ -751,7 +745,7 @@
             margin-left: 1rem;
         }
 
-        .force-sync-btn {
+        .sync-btn {
             background: #1a253c;
             border: 1px solid #00c3ff;
             border-radius: 30px;
@@ -762,7 +756,7 @@
             margin-left: 0.5rem;
         }
 
-        .force-sync-btn:hover {
+        .sync-btn:hover {
             background: #00c3ff;
             color: #0b0e14;
         }
@@ -802,8 +796,8 @@
                 <button class="nav-btn" data-page="charter">Устав</button>
                 <button class="nav-btn" data-page="ai">Помощник</button>
                 <button class="nav-btn" data-page="applications">Заявки</button>
-                <span class="sync-status" id="syncStatus">🟢 Синхронизация</span>
-                <button class="force-sync-btn" id="forceSyncBtn">🔄 Синхр.</button>
+                <span class="cloud-status" id="cloudStatus">☁️ Облако</span>
+                <button class="sync-btn" id="syncBtn">🔄 Синхр.</button>
                 <div id="authSection">
                     <button class="login-btn" id="showLoginBtn">🔑 Войти</button>
                 </div>
@@ -898,21 +892,26 @@
     </div>
 
     <footer class="footer">
-        <p>© 2026 ГИБДД РОДИНА РП. Официальный портал.</p>
+        <p>© 2026 ГИБДД РОДИНА РП. Облачная синхронизация.</p>
     </footer>
 
     <script>
         (function() {
-            // ========== НАСТРОЙКИ ==========
-            const STORAGE_KEY = 'gibdd_portal_data_v2';
-            const UPDATE_KEY = 'gibdd_last_update_v2';
+            // ========== НАСТРОЙКИ JSONBIN ==========
+            const BIN_ID = '6995aa8bd0ea881f40c3ce9b'; // Это твой личный BIN
+            const API_KEY = '$2a$10$QxbPOaLpkwmNoch1L7GuF.R8oyp9hFo/1WmikvmyNUChAAWryyd4e'; // Твой API ключ
+            const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
+            const UPDATE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+            
+            // ========== ЛОКАЛЬНЫЕ КЛЮЧИ ==========
+            const LOCAL_BACKUP_KEY = 'gibdd_local_backup';
             const ADMIN_LOGIN = 'admin';
             const ADMIN_PASSWORD = 'admin5765';
             
             // ========== ДАННЫЕ ПО УМОЛЧАНИЮ ==========
             const defaultData = {
                 version: '1.0.0',
-                lastSync: Date.now(),
+                lastCloudSync: 0,
                 forum: {
                     title: "Официальный форум ГИБДД РОДИНА РП",
                     link: "https://forum.rodina-rp.com/forums/163/",
@@ -939,10 +938,8 @@
             // ========== СОСТОЯНИЕ ==========
             let database = JSON.parse(JSON.stringify(defaultData));
             let currentUser = null;
-            let lastUpdate = 0;
-            let myUpdate = false;
-            let syncTimer = null;
-            let forceSyncTimer = null;
+            let syncInProgress = false;
+            let lastCloudVersion = 0;
 
             // ========== ЭЛЕМЕНТЫ ==========
             const notification = document.getElementById('notification');
@@ -954,149 +951,140 @@
             const readOnlyIndicator = document.getElementById('readOnlyIndicator');
             const lawsReadOnlyIndicator = document.getElementById('lawsReadOnlyIndicator');
             const charterReadOnlyIndicator = document.getElementById('charterReadOnlyIndicator');
-            const syncStatus = document.getElementById('syncStatus');
-            const forceSyncBtn = document.getElementById('forceSyncBtn');
+            const cloudStatus = document.getElementById('cloudStatus');
+            const syncBtn = document.getElementById('syncBtn');
             const versionDisplay = document.getElementById('versionDisplay');
 
             // ========== ИНИЦИАЛИЗАЦИЯ ==========
             function init() {
-                loadData();
+                loadLocalBackup();
+                syncWithCloud();
                 
-                // Запускаем проверку каждые 300ms (ОЧЕНЬ ЧАСТО!)
-                setInterval(checkUpdates, 300);
+                // Синхронизация каждые 5 секунд
+                setInterval(syncWithCloud, 5000);
                 
-                // Слушаем изменения в localStorage
-                window.addEventListener('storage', handleStorageChange);
-                
-                // Каждые 2 секунды форсируем проверку
-                setInterval(forceSync, 2000);
+                // Кнопка ручной синхронизации
+                syncBtn.addEventListener('click', () => {
+                    syncWithCloud(true);
+                });
                 
                 // Обновляем версию
                 versionDisplay.textContent = `v${database.version || '1.0.0'}`;
             }
 
-            // ========== ЗАГРУЗКА ==========
-            function loadData() {
+            // ========== ЗАГРУЗКА ЛОКАЛЬНОЙ КОПИИ ==========
+            function loadLocalBackup() {
                 try {
-                    const saved = localStorage.getItem(STORAGE_KEY);
+                    const saved = localStorage.getItem(LOCAL_BACKUP_KEY);
                     if (saved) {
                         const parsed = JSON.parse(saved);
-                        // Проверяем структуру
                         if (parsed && parsed.forum && parsed.staff) {
                             database = parsed;
-                        } else {
-                            // Если структура повреждена, используем default
-                            database = JSON.parse(JSON.stringify(defaultData));
-                            saveData(false);
+                            showNotification('📦 Загружено локально');
                         }
-                    } else {
-                        // Первый запуск
-                        database = JSON.parse(JSON.stringify(defaultData));
-                        saveData(false);
                     }
-                    
-                    const savedUpdate = localStorage.getItem(UPDATE_KEY);
-                    if (savedUpdate) {
-                        lastUpdate = parseInt(savedUpdate);
-                    } else {
-                        lastUpdate = Date.now();
-                        localStorage.setItem(UPDATE_KEY, lastUpdate.toString());
-                    }
-                    
-                    syncStatus.textContent = '🟢 Синхронизация';
                 } catch (e) {
-                    console.error('Ошибка загрузки:', e);
-                    database = JSON.parse(JSON.stringify(defaultData));
+                    console.error('Ошибка загрузки локальной копии:', e);
                 }
                 renderAll();
             }
 
-            // ========== СОХРАНЕНИЕ ==========
-            function saveData(notify = true) {
+            // ========== СОХРАНЕНИЕ ЛОКАЛЬНОЙ КОПИИ ==========
+            function saveLocalBackup() {
                 try {
-                    // Обновляем время
-                    database.lastSync = Date.now();
-                    
-                    // Сохраняем данные
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(database));
-                    
-                    // Обновляем время последнего изменения
-                    const newTime = Date.now();
-                    localStorage.setItem(UPDATE_KEY, newTime.toString());
-                    lastUpdate = newTime;
-                    
-                    // Отмечаем, что это наше изменение
-                    myUpdate = true;
-                    clearTimeout(syncTimer);
-                    syncTimer = setTimeout(() => {
-                        myUpdate = false;
-                    }, 500);
-                    
-                    if (notify) {
-                        showNotification('✅ Сохранено');
-                    }
-                    
-                    syncStatus.textContent = '🟢 Синхронизация';
+                    localStorage.setItem(LOCAL_BACKUP_KEY, JSON.stringify(database));
                 } catch (e) {
-                    console.error('Ошибка сохранения:', e);
+                    console.error('Ошибка сохранения локальной копии:', e);
                 }
             }
 
-            // ========== ПРОВЕРКА ОБНОВЛЕНИЙ ==========
-            function checkUpdates() {
+            // ========== СИНХРОНИЗАЦИЯ С ОБЛАКОМ ==========
+            async function syncWithCloud(manual = false) {
+                if (syncInProgress) return;
+                
+                syncInProgress = true;
+                cloudStatus.textContent = '☁️ Синхронизация...';
+                
                 try {
-                    const storedUpdate = localStorage.getItem(UPDATE_KEY);
-                    if (storedUpdate) {
-                        const updateTime = parseInt(storedUpdate);
+                    // Загружаем данные из облака
+                    const response = await fetch(BIN_URL, {
+                        method: 'GET',
+                        headers: {
+                            'X-Master-Key': API_KEY
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        const cloudData = data.record;
                         
-                        // Если есть новое обновление и это не наше
-                        if (updateTime > lastUpdate && !myUpdate) {
-                            const saved = localStorage.getItem(STORAGE_KEY);
-                            if (saved) {
-                                const newData = JSON.parse(saved);
-                                
-                                // Проверяем, что данные валидны
-                                if (newData && newData.forum && newData.staff) {
-                                    // Сравниваем заявки (самое важное)
-                                    const oldApps = JSON.stringify(database.applications);
-                                    const newApps = JSON.stringify(newData.applications);
-                                    
-                                    if (oldApps !== newApps) {
-                                        database = newData;
-                                        renderApplications();
-                                        showNotification('📢 Новые заявки!');
-                                    } else {
-                                        // Проверяем другие данные
-                                        const oldData = JSON.stringify(database);
-                                        const newDataStr = JSON.stringify(newData);
-                                        
-                                        if (oldData !== newDataStr) {
-                                            database = newData;
-                                            renderAll();
-                                            showNotification('📢 Данные обновлены');
-                                        }
-                                    }
-                                    
-                                    lastUpdate = updateTime;
-                                }
+                        if (cloudData && cloudData.version) {
+                            // Сравниваем версии
+                            const cloudVersion = parseInt(cloudData.version.replace(/[^0-9]/g, '')) || 0;
+                            const localVersion = parseInt(database.version.replace(/[^0-9]/g, '')) || 0;
+                            
+                            if (cloudVersion > localVersion) {
+                                // Облако новее - загружаем
+                                database = cloudData;
+                                saveLocalBackup();
+                                renderAll();
+                                showNotification('☁️ Загружено из облака');
+                            } else if (localVersion > cloudVersion && manual) {
+                                // Локально новее и это ручная синхронизация - отправляем в облако
+                                await updateCloud();
                             }
                         }
+                    } else {
+                        // Если не удалось загрузить, пробуем отправить
+                        if (manual) {
+                            await updateCloud();
+                        }
                     }
-                } catch (e) {}
+                } catch (e) {
+                    console.error('Ошибка синхронизации:', e);
+                    cloudStatus.textContent = '☁️ Ошибка';
+                    setTimeout(() => {
+                        cloudStatus.textContent = '☁️ Облако';
+                    }, 3000);
+                }
+                
+                syncInProgress = false;
+                cloudStatus.textContent = '☁️ Облако';
             }
 
-            // ========== ОБРАБОТКА ИЗМЕНЕНИЙ STORAGE ==========
-            function handleStorageChange(e) {
-                if (e.key === STORAGE_KEY || e.key === UPDATE_KEY) {
-                    // Небольшая задержка, чтобы избежать конфликтов
-                    setTimeout(checkUpdates, 50);
+            // ========== ОТПРАВКА В ОБЛАКО ==========
+            async function updateCloud() {
+                try {
+                    // Обновляем версию
+                    const versionNum = parseInt(database.version.replace(/[^0-9]/g, '')) || 0;
+                    database.version = `1.0.${versionNum + 1}`;
+                    database.lastCloudSync = Date.now();
+                    
+                    const response = await fetch(UPDATE_URL, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Master-Key': API_KEY
+                        },
+                        body: JSON.stringify(database)
+                    });
+                    
+                    if (response.ok) {
+                        saveLocalBackup();
+                        showNotification('☁️ Отправлено в облако');
+                        versionDisplay.textContent = `v${database.version}`;
+                    }
+                } catch (e) {
+                    console.error('Ошибка отправки в облако:', e);
                 }
             }
 
-            // ========== ФОРСИРОВАННАЯ ПРОВЕРКА ==========
-            function forceSync() {
-                // Просто вызываем проверку
-                checkUpdates();
+            // ========== СОХРАНЕНИЕ ДАННЫХ ==========
+            function saveData() {
+                saveLocalBackup();
+                // Запускаем синхронизацию с облаком
+                setTimeout(() => syncWithCloud(true), 500);
+                showNotification('✅ Сохранено');
             }
 
             // ========== УВЕДОМЛЕНИЕ ==========
@@ -1170,8 +1158,7 @@
                                 database.staff[index].phone = inputs[3].value;
                             }
                         });
-                        saveData(true);
-                        showNotification('✅ Руководство сохранено');
+                        saveData();
                     };
                     document.getElementById('staffContainer').after(saveBtn);
                 }
@@ -1182,9 +1169,9 @@
                 if (currentUser) {
                     container.innerHTML = `
                         <div class="law-tabs">
-                            <span class="law-tab active-law" onclick="window.showLawTab('uk')">УК РФ</span>
-                            <span class="law-tab" onclick="window.showLawTab('ak')">АК РФ</span>
-                            <span class="law-tab" onclick="window.showLawTab('pdd')">ПДД</span>
+                            <span class="law-tab active-law" onclick="showLawTab('uk')">УК РФ</span>
+                            <span class="law-tab" onclick="showLawTab('ak')">АК РФ</span>
+                            <span class="law-tab" onclick="showLawTab('pdd')">ПДД</span>
                         </div>
                         <div id="uk-tab" class="admin-edit-area">
                             <textarea id="ukText" class="admin-textarea">${database.laws.uk}</textarea>
@@ -1195,14 +1182,14 @@
                         <div id="pdd-tab" class="admin-edit-area" style="display: none;">
                             <textarea id="pddText" class="admin-textarea">${database.laws.pdd}</textarea>
                         </div>
-                        <button class="save-btn" onclick="window.saveLaws()">💾 Сохранить законы</button>
+                        <button class="save-btn" onclick="saveLaws()">💾 Сохранить законы</button>
                     `;
                 } else {
                     container.innerHTML = `
                         <div class="law-tabs">
-                            <span class="law-tab active-law" onclick="window.showLawView('uk')">УК РФ</span>
-                            <span class="law-tab" onclick="window.showLawView('ak')">АК РФ</span>
-                            <span class="law-tab" onclick="window.showLawView('pdd')">ПДД</span>
+                            <span class="law-tab active-law" onclick="showLawView('uk')">УК РФ</span>
+                            <span class="law-tab" onclick="showLawView('ak')">АК РФ</span>
+                            <span class="law-tab" onclick="showLawView('pdd')">ПДД</span>
                         </div>
                         <div id="uk-view" class="law-content active-law-content">${database.laws.uk.replace(/\n/g, '<br>')}</div>
                         <div id="ak-view" class="law-content">${database.laws.ak.replace(/\n/g, '<br>')}</div>
@@ -1216,9 +1203,9 @@
                 if (currentUser) {
                     container.innerHTML = `
                         <div class="law-tabs">
-                            <span class="law-tab active-law" onclick="window.showCharterTab('general')">Общие положения</span>
-                            <span class="law-tab" onclick="window.showCharterTab('ranks')">Ранги</span>
-                            <span class="law-tab" onclick="window.showCharterTab('rules')">Правила</span>
+                            <span class="law-tab active-law" onclick="showCharterTab('general')">Общие положения</span>
+                            <span class="law-tab" onclick="showCharterTab('ranks')">Ранги</span>
+                            <span class="law-tab" onclick="showCharterTab('rules')">Правила</span>
                         </div>
                         <div id="general-tab" class="admin-edit-area">
                             <textarea id="generalText" class="admin-textarea">${database.charter.general}</textarea>
@@ -1229,14 +1216,14 @@
                         <div id="rules-tab" class="admin-edit-area" style="display: none;">
                             <textarea id="rulesText" class="admin-textarea">${database.charter.rules}</textarea>
                         </div>
-                        <button class="save-btn" onclick="window.saveCharter()">💾 Сохранить устав</button>
+                        <button class="save-btn" onclick="saveCharter()">💾 Сохранить устав</button>
                     `;
                 } else {
                     container.innerHTML = `
                         <div class="law-tabs">
-                            <span class="law-tab active-law" onclick="window.showCharterView('general')">Общие положения</span>
-                            <span class="law-tab" onclick="window.showCharterView('ranks')">Ранги</span>
-                            <span class="law-tab" onclick="window.showCharterView('rules')">Правила</span>
+                            <span class="law-tab active-law" onclick="showCharterView('general')">Общие положения</span>
+                            <span class="law-tab" onclick="showCharterView('ranks')">Ранги</span>
+                            <span class="law-tab" onclick="showCharterView('rules')">Правила</span>
                         </div>
                         <div id="general-view" class="law-content active-law-content">${database.charter.general.replace(/\n/g, '<br>')}</div>
                         <div id="ranks-view" class="law-content">${database.charter.ranks.replace(/\n/g, '<br>')}</div>
@@ -1298,7 +1285,7 @@
                 if (akEl) database.laws.ak = akEl.value;
                 if (pddEl) database.laws.pdd = pddEl.value;
                 
-                saveData(true);
+                saveData();
                 renderLaws();
             };
 
@@ -1312,7 +1299,7 @@
                 if (ranksEl) database.charter.ranks = ranksEl.value;
                 if (rulesEl) database.charter.rules = rulesEl.value;
                 
-                saveData(true);
+                saveData();
                 renderCharter();
             };
 
@@ -1401,7 +1388,7 @@
                 if (!currentUser) return;
                 if (confirm('Удалить заявку?')) {
                     database.applications = database.applications.filter(app => app.id !== id);
-                    saveData(true);
+                    saveData();
                     renderApplications();
                 }
             };
@@ -1537,7 +1524,7 @@
                 };
 
                 database.applications.unshift(newApp);
-                saveData(true);
+                saveData();
                 
                 // Очистка формы
                 document.getElementById('appTitle').value = '';
@@ -1545,12 +1532,6 @@
                 selectedFiles = [];
                 renderFilePreviews();
                 renderApplications();
-            });
-
-            // ========== КНОПКА ФОРСИРОВАННОЙ СИНХРОНИЗАЦИИ ==========
-            forceSyncBtn.addEventListener('click', () => {
-                checkUpdates();
-                showNotification('🔄 Синхронизация выполнена');
             });
 
             // ========== ЗАПУСК ==========
