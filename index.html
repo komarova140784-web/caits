@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ГИБДД РОДИНА РП | Реальная синхронизация</title>
+    <title>ГИБДД РОДИНА РП | ИИ Помощник Unity Devs</title>
     <style>
         * {
             margin: 0;
@@ -168,6 +168,11 @@
             font-weight: 700;
             cursor: pointer;
             margin-top: 1rem;
+        }
+
+        .modal-btn:hover {
+            background: #0077ff;
+            box-shadow: 0 0 20px #0077ff;
         }
 
         .modal-error {
@@ -417,7 +422,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            height: 600px;
+            height: 700px;
             margin-top: 2rem;
         }
 
@@ -450,6 +455,12 @@
             background: #1e2a44;
             border: 1px solid #00a6ff;
             border-bottom-left-radius: 6px;
+            color: #f0f4ff;
+        }
+
+        .bot-msg.form {
+            background: #2a3a55;
+            border-color: #ffd700;
         }
 
         .chat-input-area {
@@ -470,6 +481,10 @@
             outline: none;
         }
 
+        .chat-input-area input:focus {
+            border-color: #00c3ff;
+        }
+
         .chat-input-area button {
             background: linear-gradient(145deg, #00c3ff, #0066ff);
             border: none;
@@ -480,25 +495,22 @@
             cursor: pointer;
         }
 
-        .applications-panel {
-            background: rgba(10, 18, 30, 0.8);
-            border-radius: 40px;
+        .form-container {
+            background: #1a253c;
+            border-radius: 28px;
             padding: 2rem;
-            backdrop-filter: blur(8px);
-            border: 1px solid #00c3ff;
-            margin-top: 2rem;
+            margin-top: 1rem;
+            border: 1px solid #ffd700;
         }
 
-        .app-form {
-            background: #0b1424;
-            border-radius: 32px;
-            padding: 2rem;
-            border: 1px solid #0077ff60;
-            margin-bottom: 2rem;
+        .form-title {
+            color: #ffd700;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .form-group label {
@@ -509,192 +521,62 @@
         }
 
         .form-group input,
+        .form-group select,
         .form-group textarea {
             width: 100%;
-            background: #1a253c;
+            background: #0f1a2b;
             border: 1px solid #334155;
             border-radius: 20px;
-            padding: 1rem 1.5rem;
+            padding: 0.8rem 1.2rem;
             color: white;
             outline: none;
         }
 
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #00c3ff;
+        }
+
         .form-group textarea {
-            min-height: 120px;
+            min-height: 100px;
             resize: vertical;
         }
 
-        .file-upload-area {
-            background: #0f1a2b;
-            border: 2px dashed #0077ff;
-            border-radius: 24px;
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .file-upload-area:hover {
-            border-color: #00c3ff;
-        }
-
-        .file-upload-area input {
-            display: none;
-        }
-
-        .file-list {
+        .form-buttons {
             display: flex;
-            flex-wrap: wrap;
             gap: 1rem;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
-        .file-preview {
-            background: #1a253c;
-            border-radius: 16px;
-            padding: 0.5rem;
-            position: relative;
-            width: 100px;
-            height: 100px;
-            border: 1px solid #0077ff;
-        }
-
-        .file-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 12px;
-        }
-
-        .remove-file {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #ff4444;
-            color: white;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border: 2px solid white;
-        }
-
-        .submit-btn {
+        .form-btn {
             background: linear-gradient(145deg, #00c3ff, #0066ff);
             border: none;
-            border-radius: 60px;
-            padding: 1.2rem 3rem;
-            font-weight: 800;
+            border-radius: 40px;
+            padding: 0.8rem 2rem;
             color: white;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .applications-forum {
-            margin-top: 3rem;
-        }
-
-        .app-card {
-            background: #0b1424;
-            border-radius: 28px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid #0077ff60;
-            position: relative;
-        }
-
-        .app-card:hover {
-            border-color: #00c3ff;
-        }
-
-        .app-id {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: #1a253c;
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: #7f92b0;
-        }
-
-        .app-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-            padding-right: 100px;
-        }
-
-        .app-author {
-            color: #00c3ff;
-            font-weight: 700;
-        }
-
-        .app-date {
-            color: #7f92b0;
-            font-size: 0.9rem;
-        }
-
-        .app-title {
-            font-size: 1.4rem;
-            color: white;
-            margin-bottom: 0.8rem;
-        }
-
-        .app-text {
-            color: #b2c9ff;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            white-space: pre-wrap;
-        }
-
-        .app-images {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .app-image {
-            width: 120px;
-            height: 120px;
-            border-radius: 16px;
-            object-fit: cover;
-            border: 2px solid #0077ff;
-            cursor: pointer;
-        }
-
-        .app-actions {
-            display: flex;
-            margin-top: 1rem;
-            justify-content: flex-end;
-        }
-
-        .delete-app-btn {
-            background: rgba(255, 68, 68, 0.2);
-            border: 1px solid #ff4444;
-            color: #ff8888;
-            padding: 0.5rem 1.5rem;
-            border-radius: 30px;
             font-weight: 600;
             cursor: pointer;
+            flex: 1;
         }
 
-        .delete-app-btn:hover {
-            background: #ff4444;
-            color: white;
+        .form-btn:hover {
+            background: #0077ff;
+            box-shadow: 0 0 20px #0077ff;
         }
 
-        .admin-badge {
-            background: #ffd700;
-            color: #0b0e14;
-            padding: 0.2rem 1rem;
+        .form-btn.secondary {
+            background: #2a3a55;
+            border: 1px solid #00c3ff;
+        }
+
+        .form-result {
+            margin-top: 1.5rem;
+            background: #0f1a2b;
             border-radius: 20px;
-            font-size: 0.8rem;
-            margin-left: 1rem;
+            padding: 1.5rem;
+            border-left: 6px solid #00c3ff;
+            white-space: pre-wrap;
         }
 
         .footer {
@@ -716,59 +598,44 @@
             margin-left: 1rem;
         }
 
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #00c3ff;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            box-shadow: 0 5px 20px rgba(0, 195, 255, 0.5);
-            transform: translateY(100px);
-            transition: transform 0.3s ease;
-            z-index: 3000;
-        }
-
-        .notification.show {
-            transform: translateY(0);
-        }
-
-        .error-notification {
-            background: #ff4444 !important;
-        }
-
-        .sync-status {
-            background: rgba(255, 215, 0, 0.1);
-            border: 1px solid #ffd700;
-            border-radius: 30px;
-            padding: 0.3rem 1rem;
-            font-size: 0.8rem;
-            color: #ffd700;
+        .unity-badge {
+            background: linear-gradient(145deg, #ffd700, #ffaa00);
+            color: #0b0e14;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.9rem;
             margin-left: 1rem;
         }
 
-        .sync-btn {
+        .suggestion-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 40px;
+        }
+
+        .suggestion-chip {
             background: #1a253c;
             border: 1px solid #00c3ff;
             border-radius: 30px;
-            padding: 0.3rem 1rem;
+            padding: 0.5rem 1.2rem;
             color: #00c3ff;
             cursor: pointer;
-            font-size: 0.8rem;
-            margin-left: 0.5rem;
+            font-size: 0.9rem;
+            transition: 0.2s;
         }
 
-        .sync-btn:hover {
+        .suggestion-chip:hover {
             background: #00c3ff;
             color: #0b0e14;
         }
     </style>
 </head>
 <body>
-    <div class="notification" id="notification"></div>
-
     <div class="modal" id="authModal">
         <div class="modal-content">
             <h2 class="modal-title">🔐 Авторизация</h2>
@@ -783,15 +650,13 @@
         <nav class="nav">
             <div class="logo">
                 <span class="logo-icon">🚔</span> ГИБДД РОДИНА РП
+                <span class="unity-badge">by Unity Devs</span>
             </div>
             <div class="nav-links">
                 <button class="nav-btn active" data-page="main">Главная</button>
                 <button class="nav-btn" data-page="laws">Законы</button>
                 <button class="nav-btn" data-page="charter">Устав</button>
-                <button class="nav-btn" data-page="ai">Помощник</button>
-                <button class="nav-btn" data-page="applications">Заявки</button>
-                <span class="sync-status" id="syncStatus">🔄 Готов</span>
-                <button class="sync-btn" id="forceSyncBtn">⟳ Синхр.</button>
+                <button class="nav-btn" data-page="ai">ИИ Помощник</button>
                 <div id="authSection">
                     <button class="login-btn" id="showLoginBtn">🔑 Войти</button>
                 </div>
@@ -805,6 +670,7 @@
             <div style="text-align: center; margin-bottom: 2rem;">
                 <h1 style="font-size: 3rem; background: linear-gradient(135deg, #89e0ff, #0066ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Госавтоинспекция</h1>
                 <p style="color: #a5b3d1;">Служим закону, защищаем порядок на дорогах</p>
+                <p style="color: #ffd700; margin-top: 0.5rem;">Разработано командой Unity Devs</p>
             </div>
 
             <div id="inviteContainer" class="invite-block"></div>
@@ -816,90 +682,97 @@
 
         <!-- Законы -->
         <div id="laws" class="page">
-            <h2 style="font-size: 2.5rem; color: #b3d9ff; margin-bottom: 1.5rem;">📜 Кодексы</h2>
+            <h2 style="font-size: 2.5rem; color: #b3d9ff; margin-bottom: 1.5rem;">📜 Кодексы РОДИНА РП</h2>
             <div class="laws-container" id="lawsContainer"></div>
             <span class="read-only-indicator" id="lawsReadOnlyIndicator">👁️ Только для просмотра</span>
         </div>
 
         <!-- Устав -->
         <div id="charter" class="page">
-            <h2 style="font-size: 2.5rem; color: #b3d9ff; margin-bottom: 1.5rem;">📋 Устав</h2>
+            <h2 style="font-size: 2.5rem; color: #b3d9ff; margin-bottom: 1.5rem;">📋 Устав ГИБДД РОДИНА РП</h2>
             <div class="laws-container" id="charterContainer"></div>
             <span class="read-only-indicator" id="charterReadOnlyIndicator">👁️ Только для просмотра</span>
         </div>
 
         <!-- ИИ Помощник -->
         <div id="ai" class="page">
-            <h2 style="font-size: 2.5rem; color: #b3d9ff; margin-bottom: 1rem;">🧠 Помощник</h2>
+            <h2 style="font-size: 2.5rem; color: #b3d9ff; margin-bottom: 1rem;">🧠 ИИ Помощник Unity Devs</h2>
+            <p style="color: #a5b3d1; margin-bottom: 1rem;">Задайте любой вопрос или создайте документ по форме</p>
+            
+            <div class="suggestion-chips" id="suggestionChips"></div>
+            
             <div class="ai-chat">
                 <div class="chat-msgs" id="chatMessages">
-                    <div class="msg bot-msg">Здравствуйте! Я помощник ГИБДД. Спрашивайте о законах, уставе, рангах или заявках.</div>
+                    <div class="msg bot-msg">Здравствуйте! Я интеллектуальный помощник от команды Unity Devs. Я могу:</div>
+                    <div class="msg bot-msg">• Ответить на любые вопросы о ГИБДД, законах и уставе</div>
+                    <div class="msg bot-msg">• Рассказать о разработчиках и команде Unity Devs</div>
+                    <div class="msg bot-msg">• Помочь с созданием документов (рапорты, выговоры, увольнения)</div>
+                    <div class="msg bot-msg">• Объяснить правила и процедуры</div>
+                    <div class="msg bot-msg form" style="margin-top: 1rem;">👇 Для создания документа нажмите "Создать документ" ниже</div>
                 </div>
                 <div class="chat-input-area">
-                    <input type="text" id="chatInput" placeholder="Введите вопрос...">
+                    <input type="text" id="chatInput" placeholder="Введите ваш вопрос...">
                     <button id="sendChatBtn">Отправить</button>
+                    <button id="showFormBtn" style="background: #ffd700; color: #0b0e14; margin-left: 0.5rem;">📝 Документ</button>
                 </div>
             </div>
-        </div>
 
-        <!-- Заявки -->
-        <div id="applications" class="page">
-            <h2 style="font-size: 2.5rem; color: #b3d9ff; margin-bottom: 1rem;">📋 Заявки</h2>
-            
-            <div class="applications-panel">
-                <div class="app-form">
-                    <h3 style="color: #00c3ff; margin-bottom: 1.5rem;">Создать заявку</h3>
-                    
-                    <div class="form-group">
-                        <label>Автор</label>
-                        <input type="text" id="appAuthor" placeholder="Ваш никнейм" value="Гость">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Заголовок</label>
-                        <input type="text" id="appTitle" placeholder="Краткое описание">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Текст</label>
-                        <textarea id="appText" placeholder="Подробное описание..."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Фото</label>
-                        <div class="file-upload-area" id="fileUploadArea">
-                            <input type="file" id="fileInput" multiple accept="image/*">
-                            <p>👆 Нажмите или перетащите файлы</p>
-                            <div class="file-list" id="fileList"></div>
-                        </div>
-                    </div>
-
-                    <button class="submit-btn" id="submitAppBtn">📨 Отправить</button>
+            <!-- Форма создания документа (скрыта по умолчанию) -->
+            <div class="form-container" id="documentForm" style="display: none;">
+                <div class="form-title">📄 Создание документа</div>
+                
+                <div class="form-group">
+                    <label>Тип документа</label>
+                    <select id="docType">
+                        <option value="warning">Выговор</option>
+                        <option value="firing">Увольнение</option>
+                        <option value="report">Рапорт</option>
+                        <option value="award">Награждение</option>
+                    </select>
                 </div>
 
-                <div class="applications-forum">
-                    <h3 style="color: #00c3ff; margin-bottom: 1.5rem;">📌 Лента заявок</h3>
-                    <div id="applicationsList"></div>
+                <div class="form-group">
+                    <label>Никнейм сотрудника</label>
+                    <input type="text" id="targetName" placeholder="Введите никнейм">
                 </div>
+
+                <div class="form-group">
+                    <label>Причина</label>
+                    <textarea id="reason" placeholder="Опишите причину..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Доказательства (ссылки)</label>
+                    <input type="text" id="evidence" placeholder="Ссылки на скриншоты/видео">
+                </div>
+
+                <div class="form-group">
+                    <label>Кто составил</label>
+                    <input type="text" id="author" placeholder="Ваш никнейм" value="Администрация">
+                </div>
+
+                <div class="form-buttons">
+                    <button class="form-btn" id="generateDoc">📄 Сгенерировать</button>
+                    <button class="form-btn secondary" id="hideFormBtn">Отмена</button>
+                </div>
+
+                <div class="form-result" id="formResult" style="display: none;"></div>
             </div>
         </div>
     </div>
 
     <footer class="footer">
-        <p>© 2026 ГИБДД РОДИНА РП. Мгновенная синхронизация.</p>
+        <p>© 2026 ГИБДД РОДИНА РП. Разработано командой <span style="color: #ffd700;">Unity Devs</span></p>
+        <p style="font-size: 0.8rem; margin-top: 0.5rem;">По вопросам и предложениям: unity.devs@rodina-rp.ru</p>
     </footer>
 
     <script>
         (function() {
-            // ========== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ==========
-            const STORAGE_KEY = 'gibdd_master_data';
-            const UPDATE_KEY = 'gibdd_update_signal';
+            // ========== ДАННЫЕ ==========
             const ADMIN_LOGIN = 'admin';
             const ADMIN_PASSWORD = 'admin5765';
             
-            // ========== ДАННЫЕ ПО УМОЛЧАНИЮ ==========
             const defaultData = {
-                version: '1.0.0',
                 forum: {
                     title: "Официальный форум ГИБДД РОДИНА РП",
                     link: "https://forum.rodina-rp.com/forums/163/",
@@ -919,19 +792,78 @@
                     general: "**Общие положения**\n\nСтатья 1. ГИБДД обеспечивает безопасность дорожного движения.\nСтатья 2. Основные задачи: соблюдение ПДД, профилактика.",
                     ranks: "**Ранги и повышение**\n\n1 ранг - Стажёр\n2 ранг - Инспектор\n3 ранг - Лейтенант\n4 ранг - Капитан",
                     rules: "**Правила и обязанности**\n\nОбязанности: знать законы, быть вежливым.\nЗапреты: злоупотребление положением."
-                },
-                applications: []
+                }
             };
 
-            // ========== СОСТОЯНИЕ ==========
-            let database = JSON.parse(JSON.stringify(defaultData));
+            // ========== БАЗА ЗНАНИЙ ДЛЯ НЕЙРОСЕТИ ==========
+            const knowledgeBase = {
+                // Приветствия
+                'привет': 'Здравствуйте! Я помощник от команды Unity Devs. Чем могу помочь?',
+                'здравствуйте': 'Добрый день! Я к вашим услугам. Спрашивайте о ГИБДД, законах или документах.',
+                'добрый день': 'Здравствуйте! Чем могу быть полезен?',
+                
+                // Unity Devs
+                'кто разработал': 'Наш сайт разработан командой **Unity Devs** — это группа талантливых разработчиков, специализирующихся на создании игровых и веб-проектов для RP серверов.',
+                'unity devs': '**Unity Devs** — команда профессионалов: фронтенд-разработчики, дизайнеры и системные администраторы. Мы создаём удобные и современные решения для RP проектов.',
+                'разработчики': 'Наша команда Unity Devs состоит из опытных специалистов: системные архитекторы, UI/UX дизайнеры, фронтенд и бэкенд разработчики. По всем вопросам: unity.devs@rodina-rp.ru',
+                'команда': 'Unity Devs — это сообщество разработчиков, создающих качественные проекты для RP серверов. Мы всегда открыты к сотрудничеству!',
+                
+                // Контакты
+                'контакты': 'Связаться с командой Unity Devs можно по email: unity.devs@rodina-rp.ru или через наш форум.',
+                'email': 'unity.devs@rodina-rp.ru — пишите по любым вопросам, предложениям или багам.',
+                'почта': 'Электронная почта команды: unity.devs@rodina-rp.ru',
+                
+                // ГИБДД общее
+                'гибдд': 'ГИБДД (Госавтоинспекция) — обеспечивает безопасность дорожного движения на территории Восточного Округа. Мы следим за соблюдением ПДД, проводим профилактику нарушений.',
+                'гаи': 'ГАИ — старое название, сейчас правильно ГИБДД (Госавтоинспекция).',
+                
+                // Законы
+                'закон': 'У нас есть несколько кодексов:\n• УК (Уголовный кодекс) — уголовные преступления\n• АК (Административный кодекс) — штрафы и нарушения\n• ПДД (Правила дорожного движения)\nВсе можно найти на вкладке "Законы".',
+                'ук': 'Уголовный кодекс содержит статьи об уголовных преступлениях:\n• Статья 158 — Кража\n• Статья 264 — Нарушение ПДД\n• Статья 319 — Оскорбление власти\nПодробнее на вкладке "Законы".',
+                'ак': 'Административный кодекс о правонарушениях:\n• Статья 12.6 — Ремни безопасности\n• Статья 12.8 — Нетрезвое вождение\n• Статья 12.9 — Превышение скорости\nВсе статьи на вкладке "Законы".',
+                'пдд': 'Правила дорожного движения:\n• Скорость: город 60 км/ч, трасса 90, магистраль 110\n• Поворотники обязательны\n• Парковка запрещена на тротуарах\nПодробнее на вкладке "Законы".',
+                
+                // Устав
+                'устав': 'Устав ГИБДД содержит:\n• Общие положения\n• Систему рангов и повышение\n• Правила и обязанности сотрудников\nВсё на вкладке "Устав".',
+                'ранги': 'Система рангов:\n1 ранг — Стажёр\n2 ранг — Инспектор\n3 ранг — Лейтенант\n4 ранг — Капитан\n5+ ранг — Руководство',
+                'повышение': 'Для повышения нужно:\n• Отсутствие взысканий\n• Определённый стаж\n• Выполнение плана\n• Сдача экзаменов',
+                
+                // Сотрудники
+                'воронов': 'Алексей Воронов — Начальник ГИБДД. Контакт: @voronov',
+                'соколов': 'Дмитрий Соколов — Зам. начальника. Контакт: @sokolov',
+                'волкова': 'Екатерина Волкова — Инспектор по пропаганде. Контакт: @volkova',
+                
+                // Документы и формы
+                'документ': 'Я могу помочь создать документ! Нажмите кнопку "📝 Документ" в чате, чтобы открыть форму.\nДоступны:\n• Выговор\n• Увольнение\n• Рапорт\n• Награждение',
+                'выговор': 'Для создания выговора откройте форму (кнопка "📝 Документ") и выберите тип "Выговор". Заполните все поля, и я сгенерирую готовый документ.',
+                'увольнение': 'Для создания приказа об увольнении используйте форму (кнопка "📝 Документ") с типом "Увольнение". Укажите причину и доказательства.',
+                'рапорт': 'Хотите написать рапорт? Откройте форму (кнопка "📝 Документ") и выберите тип "Рапорт". Заполните данные, и я помогу с оформлением.',
+                
+                // Помощь
+                'помощь': 'Я могу помочь с:\n• Вопросами о ГИБДД и законах\n• Информацией о разработчиках Unity Devs\n• Созданием документов (выговоры, увольнения)\n• Объяснением правил и процедур\nЧто именно вас интересует?',
+                'что ты умеешь': 'Мой функционал:\n1. Отвечать на любые вопросы о сайте, ГИБДД, законах\n2. Рассказывать о команде Unity Devs\n3. Создавать документы по формам\n4. Помогать с оформлением рапортов\n5. Объяснять процедуры и правила',
+                
+                // Сайт
+                'сайт': 'На сайте 4 раздела:\n• Главная — форум и руководство\n• Законы — УК, АК, ПДД\n• Устав — ранги и правила\n• ИИ Помощник — я здесь',
+                'разделы': 'У нас есть Главная, Законы, Устав и ИИ Помощник. Всё для вашего удобства!',
+                
+                // Процедуры
+                'дтп': 'При ДТП необходимо:\n1. Остановиться и включить аварийку\n2. Вызвать ГИБДД\n3. Не перемещать машину\n4. Зафиксировать повреждения',
+                'штраф': 'Штрафы зависят от нарушения. Например:\n• Ремни — 1000₽\n• Превышение скорости — от 500₽\n• Нетрезвое вождение — лишение прав',
+                
+                // Благодарности
+                'спасибо': 'Пожалуйста! Обращайтесь ещё. Всегда рад помочь от лица команды Unity Devs!',
+                'благодарю': 'Всегда пожалуйста! Если будут вопросы — я здесь.',
+                
+                // Прощание
+                'пока': 'До свидания! Заходите ещё на наш сайт от Unity Devs!',
+                'до свидания': 'Всего доброго! Буду рад помочь снова.'
+            };
+
             let currentUser = null;
-            let lastUpdate = Date.now();
-            let myUpdate = false;
-            let updateTimer = null;
+            let database = JSON.parse(JSON.stringify(defaultData));
 
             // ========== ЭЛЕМЕНТЫ ==========
-            const notification = document.getElementById('notification');
             const authModal = document.getElementById('authModal');
             const loginInput = document.getElementById('loginInput');
             const passwordInput = document.getElementById('passwordInput');
@@ -940,163 +872,35 @@
             const readOnlyIndicator = document.getElementById('readOnlyIndicator');
             const lawsReadOnlyIndicator = document.getElementById('lawsReadOnlyIndicator');
             const charterReadOnlyIndicator = document.getElementById('charterReadOnlyIndicator');
-            const syncStatus = document.getElementById('syncStatus');
-            const forceSyncBtn = document.getElementById('forceSyncBtn');
-
-            // ========== ИНИЦИАЛИЗАЦИЯ ==========
-            function init() {
-                loadData();
-                
-                // Запускаем проверку КАЖДУЮ СЕКУНДУ
-                setInterval(checkUpdates, 1000);
-                
-                // Слушаем изменения в localStorage
-                window.addEventListener('storage', handleStorageChange);
-                
-                // Кнопка ручной синхронизации
-                forceSyncBtn.addEventListener('click', forceSync);
-            }
+            const chatMessages = document.getElementById('chatMessages');
+            const chatInput = document.getElementById('chatInput');
+            const sendBtn = document.getElementById('sendChatBtn');
+            const showFormBtn = document.getElementById('showFormBtn');
+            const hideFormBtn = document.getElementById('hideFormBtn');
+            const documentForm = document.getElementById('documentForm');
+            const generateDoc = document.getElementById('generateDoc');
+            const formResult = document.getElementById('formResult');
+            const suggestionChips = document.getElementById('suggestionChips');
 
             // ========== ЗАГРУЗКА ==========
             function loadData() {
                 try {
-                    const saved = localStorage.getItem(STORAGE_KEY);
+                    const saved = localStorage.getItem('gibdd_data');
                     if (saved) {
                         const parsed = JSON.parse(saved);
                         if (parsed && parsed.forum) {
                             database = parsed;
-                            showNotification('📦 Данные загружены', false);
-                        } else {
-                            database = JSON.parse(JSON.stringify(defaultData));
-                            saveData(false);
                         }
-                    } else {
-                        database = JSON.parse(JSON.stringify(defaultData));
-                        saveData(false);
                     }
-                    
-                    const savedUpdate = localStorage.getItem(UPDATE_KEY);
-                    if (savedUpdate) {
-                        lastUpdate = parseInt(savedUpdate);
-                    } else {
-                        lastUpdate = Date.now();
-                        localStorage.setItem(UPDATE_KEY, lastUpdate.toString());
-                    }
-                    
-                    updateSyncStatus('🟢 Активно');
-                } catch (e) {
-                    showNotification('❌ Ошибка загрузки: ' + e.message, true);
-                    database = JSON.parse(JSON.stringify(defaultData));
-                }
+                } catch (e) {}
                 renderAll();
             }
 
             // ========== СОХРАНЕНИЕ ==========
-            function saveData(notify = true) {
+            function saveData() {
                 try {
-                    // Сохраняем данные
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(database));
-                    
-                    // Обновляем сигнал
-                    const newTime = Date.now();
-                    localStorage.setItem(UPDATE_KEY, newTime.toString());
-                    lastUpdate = newTime;
-                    
-                    // Отмечаем, что это наше изменение
-                    myUpdate = true;
-                    clearTimeout(updateTimer);
-                    updateTimer = setTimeout(() => {
-                        myUpdate = false;
-                    }, 500);
-                    
-                    if (notify) {
-                        showNotification('✅ Сохранено', false);
-                    }
-                    
-                    updateSyncStatus('🟢 Активно');
-                } catch (e) {
-                    showNotification('❌ Ошибка сохранения: ' + e.message, true);
-                }
-            }
-
-            // ========== ПРОВЕРКА ОБНОВЛЕНИЙ ==========
-            function checkUpdates() {
-                try {
-                    const storedUpdate = localStorage.getItem(UPDATE_KEY);
-                    if (storedUpdate) {
-                        const updateTime = parseInt(storedUpdate);
-                        
-                        // Если есть новое обновление и это не наше
-                        if (updateTime > lastUpdate && !myUpdate) {
-                            const saved = localStorage.getItem(STORAGE_KEY);
-                            if (saved) {
-                                const newData = JSON.parse(saved);
-                                
-                                // Проверяем заявки
-                                const oldApps = JSON.stringify(database.applications);
-                                const newApps = JSON.stringify(newData.applications);
-                                
-                                if (oldApps !== newApps) {
-                                    database = newData;
-                                    renderApplications();
-                                    showNotification('📢 Появились новые заявки!', false);
-                                } else {
-                                    const oldData = JSON.stringify(database);
-                                    const newDataStr = JSON.stringify(newData);
-                                    
-                                    if (oldData !== newDataStr) {
-                                        database = newData;
-                                        renderAll();
-                                        showNotification('📢 Данные обновлены', false);
-                                    }
-                                }
-                                
-                                lastUpdate = updateTime;
-                            }
-                        }
-                    }
-                } catch (e) {
-                    console.error('Ошибка проверки:', e);
-                }
-            }
-
-            // ========== ОБРАБОТКА ИЗМЕНЕНИЙ STORAGE ==========
-            function handleStorageChange(e) {
-                if (e.key === UPDATE_KEY) {
-                    setTimeout(checkUpdates, 50);
-                }
-            }
-
-            // ========== ФОРСИРОВАННАЯ СИНХРОНИЗАЦИЯ ==========
-            function forceSync() {
-                updateSyncStatus('🔄 Синхронизация...');
-                checkUpdates();
-                setTimeout(() => {
-                    updateSyncStatus('🟢 Активно');
-                    showNotification('🔄 Синхронизация выполнена', false);
-                }, 500);
-            }
-
-            // ========== ОБНОВЛЕНИЕ СТАТУСА ==========
-            function updateSyncStatus(text) {
-                syncStatus.textContent = text;
-            }
-
-            // ========== УВЕДОМЛЕНИЕ ==========
-            function showNotification(text, isError = false) {
-                notification.textContent = text;
-                notification.classList.add('show');
-                
-                if (isError) {
-                    notification.classList.add('error-notification');
-                } else {
-                    notification.classList.remove('error-notification');
-                }
-                
-                clearTimeout(notification.timer);
-                notification.timer = setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 3000);
+                    localStorage.setItem('gibdd_data', JSON.stringify(database));
+                } catch (e) {}
             }
 
             // ========== РЕНДЕР ==========
@@ -1104,7 +908,6 @@
                 renderMainPage();
                 renderLaws();
                 renderCharter();
-                renderApplications();
                 updateAuthUI();
             }
 
@@ -1116,20 +919,20 @@
                 `;
 
                 const staffHtml = database.staff.map((person, index) => `
-                    <div class="person-card" data-staff-index="${index}">
+                    <div class="person-card">
                         <div class="edit-badge">${currentUser ? '✎ Редактировать' : '👁️ Просмотр'}</div>
                         ${currentUser ? 
-                            `<input type="text" class="admin-input" value="${person.name}" placeholder="Имя" onchange="window.updateStaffField(${index}, 'name', this.value)">` :
+                            `<input type="text" class="admin-input" value="${person.name}" placeholder="Имя" onchange="updateStaff(${index}, 'name', this.value)">` :
                             `<h3>${person.name}</h3>`
                         }
                         ${currentUser ? 
-                            `<input type="text" class="admin-input" value="${person.rank}" placeholder="Ранг" onchange="window.updateStaffField(${index}, 'rank', this.value)">` :
+                            `<input type="text" class="admin-input" value="${person.rank}" placeholder="Ранг" onchange="updateStaff(${index}, 'rank', this.value)">` :
                             `<div class="rank">${person.rank}</div>`
                         }
                         ${currentUser ? 
                             `<div class="contact">
-                                <input type="text" class="admin-input" value="${person.contact}" placeholder="Контакт" onchange="window.updateStaffField(${index}, 'contact', this.value)">
-                                <input type="text" class="admin-input" value="${person.phone}" placeholder="Телефон" onchange="window.updateStaffField(${index}, 'phone', this.value)">
+                                <input type="text" class="admin-input" value="${person.contact}" placeholder="Контакт" onchange="updateStaff(${index}, 'contact', this.value)">
+                                <input type="text" class="admin-input" value="${person.phone}" placeholder="Телефон" onchange="updateStaff(${index}, 'phone', this.value)">
                             </div>` :
                             `<div class="contact">📨 ${person.contact}<br>📞 ${person.phone}</div>`
                         }
@@ -1138,29 +941,13 @@
                 
                 document.getElementById('staffContainer').innerHTML = staffHtml;
                 
-                const oldBtn = document.querySelector('.save-staff-btn');
-                if (oldBtn) oldBtn.remove();
-                
                 if (currentUser) {
                     const saveBtn = document.createElement('button');
-                    saveBtn.className = 'save-btn save-staff-btn';
+                    saveBtn.className = 'save-btn';
                     saveBtn.textContent = '💾 Сохранить руководство';
                     saveBtn.onclick = function() {
-                        try {
-                            const staffCards = document.querySelectorAll('[data-staff-index]');
-                            staffCards.forEach((card, index) => {
-                                const inputs = card.querySelectorAll('input');
-                                if (inputs.length >= 4 && database.staff[index]) {
-                                    database.staff[index].name = inputs[0].value;
-                                    database.staff[index].rank = inputs[1].value;
-                                    database.staff[index].contact = inputs[2].value;
-                                    database.staff[index].phone = inputs[3].value;
-                                }
-                            });
-                            saveData();
-                        } catch (e) {
-                            showNotification('❌ Ошибка: ' + e.message, true);
-                        }
+                        saveData();
+                        alert('Изменения сохранены!');
                     };
                     document.getElementById('staffContainer').after(saveBtn);
                 }
@@ -1171,9 +958,9 @@
                 if (currentUser) {
                     container.innerHTML = `
                         <div class="law-tabs">
-                            <span class="law-tab active-law" onclick="window.showLawTab('uk')">УК РФ</span>
-                            <span class="law-tab" onclick="window.showLawTab('ak')">АК РФ</span>
-                            <span class="law-tab" onclick="window.showLawTab('pdd')">ПДД</span>
+                            <span class="law-tab active-law" onclick="showLawTab('uk')">УК РФ</span>
+                            <span class="law-tab" onclick="showLawTab('ak')">АК РФ</span>
+                            <span class="law-tab" onclick="showLawTab('pdd')">ПДД</span>
                         </div>
                         <div id="uk-tab" class="admin-edit-area">
                             <textarea id="ukText" class="admin-textarea">${database.laws.uk}</textarea>
@@ -1184,14 +971,14 @@
                         <div id="pdd-tab" class="admin-edit-area" style="display: none;">
                             <textarea id="pddText" class="admin-textarea">${database.laws.pdd}</textarea>
                         </div>
-                        <button class="save-btn" onclick="window.saveLaws()">💾 Сохранить законы</button>
+                        <button class="save-btn" onclick="saveLaws()">💾 Сохранить законы</button>
                     `;
                 } else {
                     container.innerHTML = `
                         <div class="law-tabs">
-                            <span class="law-tab active-law" onclick="window.showLawView('uk')">УК РФ</span>
-                            <span class="law-tab" onclick="window.showLawView('ak')">АК РФ</span>
-                            <span class="law-tab" onclick="window.showLawView('pdd')">ПДД</span>
+                            <span class="law-tab active-law" onclick="showLawView('uk')">УК РФ</span>
+                            <span class="law-tab" onclick="showLawView('ak')">АК РФ</span>
+                            <span class="law-tab" onclick="showLawView('pdd')">ПДД</span>
                         </div>
                         <div id="uk-view" class="law-content active-law-content">${database.laws.uk.replace(/\n/g, '<br>')}</div>
                         <div id="ak-view" class="law-content">${database.laws.ak.replace(/\n/g, '<br>')}</div>
@@ -1205,9 +992,9 @@
                 if (currentUser) {
                     container.innerHTML = `
                         <div class="law-tabs">
-                            <span class="law-tab active-law" onclick="window.showCharterTab('general')">Общие положения</span>
-                            <span class="law-tab" onclick="window.showCharterTab('ranks')">Ранги</span>
-                            <span class="law-tab" onclick="window.showCharterTab('rules')">Правила</span>
+                            <span class="law-tab active-law" onclick="showCharterTab('general')">Общие положения</span>
+                            <span class="law-tab" onclick="showCharterTab('ranks')">Ранги</span>
+                            <span class="law-tab" onclick="showCharterTab('rules')">Правила</span>
                         </div>
                         <div id="general-tab" class="admin-edit-area">
                             <textarea id="generalText" class="admin-textarea">${database.charter.general}</textarea>
@@ -1218,14 +1005,14 @@
                         <div id="rules-tab" class="admin-edit-area" style="display: none;">
                             <textarea id="rulesText" class="admin-textarea">${database.charter.rules}</textarea>
                         </div>
-                        <button class="save-btn" onclick="window.saveCharter()">💾 Сохранить устав</button>
+                        <button class="save-btn" onclick="saveCharter()">💾 Сохранить устав</button>
                     `;
                 } else {
                     container.innerHTML = `
                         <div class="law-tabs">
-                            <span class="law-tab active-law" onclick="window.showCharterView('general')">Общие положения</span>
-                            <span class="law-tab" onclick="window.showCharterView('ranks')">Ранги</span>
-                            <span class="law-tab" onclick="window.showCharterView('rules')">Правила</span>
+                            <span class="law-tab active-law" onclick="showCharterView('general')">Общие положения</span>
+                            <span class="law-tab" onclick="showCharterView('ranks')">Ранги</span>
+                            <span class="law-tab" onclick="showCharterView('rules')">Правила</span>
                         </div>
                         <div id="general-view" class="law-content active-law-content">${database.charter.general.replace(/\n/g, '<br>')}</div>
                         <div id="ranks-view" class="law-content">${database.charter.ranks.replace(/\n/g, '<br>')}</div>
@@ -1234,82 +1021,28 @@
                 }
             }
 
-            function renderApplications() {
-                const container = document.getElementById('applicationsList');
-                if (!database.applications || database.applications.length === 0) {
-                    container.innerHTML = '<p style="color: #7f92b0;">Пока нет заявок</p>';
-                    return;
-                }
-
-                const sortedApps = [...database.applications].sort((a, b) => {
-                    return new Date(b.date) - new Date(a.date);
-                });
-
-                container.innerHTML = sortedApps.map(app => `
-                    <div class="app-card">
-                        <div class="app-id">ID: ${app.id}</div>
-                        <div class="app-header">
-                            <span class="app-author">👤 ${app.author}</span>
-                            <span class="app-date">${app.date}</span>
-                        </div>
-                        <div class="app-title">${app.title}</div>
-                        <div class="app-text">${app.text.replace(/\n/g, '<br>')}</div>
-                        ${app.images && app.images.length ? `
-                            <div class="app-images">
-                                ${app.images.map(img => `<img src="${img}" class="app-image" onclick="window.open(this.src)">`).join('')}
-                            </div>
-                        ` : ''}
-                        ${currentUser ? `
-                            <div class="app-actions">
-                                <button class="delete-app-btn" onclick="window.deleteApplication(${app.id})">🗑️ Удалить</button>
-                            </div>
-                        ` : ''}
-                    </div>
-                `).join('');
-            }
-
             // ========== ФУНКЦИИ ДЛЯ АДМИНА ==========
-            window.updateStaffField = function(index, field, value) {
+            window.updateStaff = function(index, field, value) {
                 if (!currentUser) return;
-                if (database.staff[index]) {
-                    database.staff[index][field] = value;
-                }
+                database.staff[index][field] = value;
             };
 
             window.saveLaws = function() {
                 if (!currentUser) return;
-                try {
-                    const ukEl = document.getElementById('ukText');
-                    const akEl = document.getElementById('akText');
-                    const pddEl = document.getElementById('pddText');
-                    
-                    if (ukEl) database.laws.uk = ukEl.value;
-                    if (akEl) database.laws.ak = akEl.value;
-                    if (pddEl) database.laws.pdd = pddEl.value;
-                    
-                    saveData();
-                    renderLaws();
-                } catch (e) {
-                    showNotification('❌ Ошибка: ' + e.message, true);
-                }
+                database.laws.uk = document.getElementById('ukText').value;
+                database.laws.ak = document.getElementById('akText').value;
+                database.laws.pdd = document.getElementById('pddText').value;
+                saveData();
+                alert('Законы сохранены!');
             };
 
             window.saveCharter = function() {
                 if (!currentUser) return;
-                try {
-                    const generalEl = document.getElementById('generalText');
-                    const ranksEl = document.getElementById('ranksText');
-                    const rulesEl = document.getElementById('rulesText');
-                    
-                    if (generalEl) database.charter.general = generalEl.value;
-                    if (ranksEl) database.charter.ranks = ranksEl.value;
-                    if (rulesEl) database.charter.rules = rulesEl.value;
-                    
-                    saveData();
-                    renderCharter();
-                } catch (e) {
-                    showNotification('❌ Ошибка: ' + e.message, true);
-                }
+                database.charter.general = document.getElementById('generalText').value;
+                database.charter.ranks = document.getElementById('ranksText').value;
+                database.charter.rules = document.getElementById('rulesText').value;
+                saveData();
+                alert('Устав сохранен!');
             };
 
             // ========== ВКЛАДКИ ==========
@@ -1349,16 +1082,16 @@
                     `;
                     document.getElementById('logoutBtn').addEventListener('click', logout);
                     
-                    if (readOnlyIndicator) readOnlyIndicator.textContent = '🔓 Режим редактирования';
-                    if (lawsReadOnlyIndicator) lawsReadOnlyIndicator.textContent = '🔓 Режим редактирования';
-                    if (charterReadOnlyIndicator) charterReadOnlyIndicator.textContent = '🔓 Режим редактирования';
+                    readOnlyIndicator.textContent = '🔓 Режим редактирования';
+                    lawsReadOnlyIndicator.textContent = '🔓 Режим редактирования';
+                    charterReadOnlyIndicator.textContent = '🔓 Режим редактирования';
                 } else {
                     authSection.innerHTML = '<button class="login-btn" id="showLoginBtn">🔑 Войти</button>';
                     document.getElementById('showLoginBtn').addEventListener('click', showAuthModal);
                     
-                    if (readOnlyIndicator) readOnlyIndicator.textContent = '👁️ Только для просмотра';
-                    if (lawsReadOnlyIndicator) lawsReadOnlyIndicator.textContent = '👁️ Только для просмотра';
-                    if (charterReadOnlyIndicator) charterReadOnlyIndicator.textContent = '👁️ Только для просмотра';
+                    readOnlyIndicator.textContent = '👁️ Только для просмотра';
+                    lawsReadOnlyIndicator.textContent = '👁️ Только для просмотра';
+                    charterReadOnlyIndicator.textContent = '👁️ Только для просмотра';
                 }
                 
                 renderAll();
@@ -1381,10 +1114,8 @@
                     localStorage.setItem('gibdd_user', ADMIN_LOGIN);
                     hideAuthModal();
                     updateAuthUI();
-                    showNotification('✅ Добро пожаловать, админ!', false);
                 } else {
                     authError.classList.add('show');
-                    showNotification('❌ Неверный логин или пароль', true);
                 }
             }
 
@@ -1392,23 +1123,149 @@
                 currentUser = null;
                 localStorage.removeItem('gibdd_user');
                 updateAuthUI();
-                showNotification('👋 Вы вышли', false);
             }
 
-            // ========== ЗАЯВКИ ==========
-            window.deleteApplication = function(id) {
-                if (!currentUser) return;
-                if (confirm('Удалить заявку?')) {
-                    try {
-                        database.applications = database.applications.filter(app => app.id !== id);
-                        saveData();
-                        renderApplications();
-                        showNotification('✅ Заявка удалена', false);
-                    } catch (e) {
-                        showNotification('❌ Ошибка: ' + e.message, true);
+            // ========== НЕЙРОСЕТЬ ==========
+            function addMessage(text, sender, isForm = false) {
+                const msg = document.createElement('div');
+                msg.className = `msg ${sender === 'user' ? 'user-msg' : 'bot-msg'} ${isForm ? 'form' : ''}`;
+                msg.textContent = text;
+                chatMessages.appendChild(msg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function getBotReply(question) {
+                const q = question.toLowerCase().trim();
+                
+                // Проверяем точные совпадения в базе знаний
+                for (let key in knowledgeBase) {
+                    if (q.includes(key)) {
+                        return knowledgeBase[key];
                     }
                 }
-            };
+                
+                // Поиск по ключевым словам
+                if (q.includes('кто') && (q.includes('создал') || q.includes('разработал'))) {
+                    return knowledgeBase['кто разработал'];
+                }
+                
+                if (q.includes('как') && q.includes('связаться')) {
+                    return knowledgeBase['контакты'];
+                }
+                
+                if (q.includes('что') && q.includes('умеешь')) {
+                    return knowledgeBase['что ты умеешь'];
+                }
+                
+                if (q.includes('правила') || q.includes('процедуры')) {
+                    return 'Основные процедуры:\n• При ДТП — вызвать ГИБДД\n• При нарушении — составить протокол\n• Для повышения — сдать экзамены\nПодробнее на вкладках "Законы" и "Устав".';
+                }
+                
+                if (q.includes('штраф') && q.includes('сколько')) {
+                    return 'Размеры штрафов:\n• Ремни безопасности — 1000₽\n• Превышение скорости — 500-2500₽\n• Парковка в неположенном месте — 1500₽\n• Нетрезвое вождение — 5000₽ + лишение прав';
+                }
+                
+                if (q.includes('документ') || q.includes('форма')) {
+                    return knowledgeBase['документ'];
+                }
+                
+                // Если ничего не найдено
+                return 'Извините, я не совсем понял вопрос. Я могу рассказать о:\n• ГИБДД и законах\n• Команде Unity Devs\n• Создании документов\n• Правилах и процедурах\n\nЧто именно вас интересует?';
+            }
+
+            // ========== СОЗДАНИЕ ДОКУМЕНТОВ ==========
+            function generateDocument() {
+                const type = document.getElementById('docType').value;
+                const target = document.getElementById('targetName').value.trim();
+                const reason = document.getElementById('reason').value.trim();
+                const evidence = document.getElementById('evidence').value.trim();
+                const author = document.getElementById('author').value.trim() || 'Администрация';
+                const date = new Date().toLocaleString();
+
+                if (!target || !reason) {
+                    alert('Заполните никнейм и причину!');
+                    return;
+                }
+
+                let docText = '';
+                const docNumber = '№' + Math.floor(Math.random() * 1000) + '-' + date.slice(0,4);
+
+                switch(type) {
+                    case 'warning':
+                        docText = `📋 **ВЫГОВОР** ${docNumber}\n\nот ${date}\n\nКому: ${target}\nКем вынесен: ${author}\n\n**Основание:**\n${reason}\n\n**Доказательства:**\n${evidence || 'Не приложены'}\n\nСотруднику объявлен выговор за нарушение служебной дисциплины. При повторном нарушении последует более строгое взыскание вплоть до увольнения.\n\nПодпись: ${author}`;
+                        break;
+                    case 'firing':
+                        docText = `📋 **ПРИКАЗ ОБ УВОЛЬНЕНИИ** ${docNumber}\n\nот ${date}\n\nУвольняется: ${target}\nИнициатор: ${author}\n\n**Причина увольнения:**\n${reason}\n\n**Доказательства:**\n${evidence || 'Не приложены'}\n\nСотрудник ${target} уволен из рядов ГИБДД РОДИНА РП с ${date}.\n\nНачальник ГИБДД: ${author}`;
+                        break;
+                    case 'report':
+                        docText = `📋 **РАПОРТ** ${docNumber}\n\nот ${date}\n\nОт кого: ${author}\nКому: ${target}\n\n**Содержание рапорта:**\n${reason}\n\n**Приложения:**\n${evidence || 'Нет'}\n\nПодпись: ${author}`;
+                        break;
+                    case 'award':
+                        docText = `📋 **НАГРАЖДЕНИЕ** ${docNumber}\n\nот ${date}\n\nНаграждается: ${target}\nКем награждён: ${author}\n\n**Основание для награждения:**\n${reason}\n\n**Доказательства заслуг:**\n${evidence || 'Не указаны'}\n\nЗа добросовестную службу и вклад в развитие ГИБДД, сотрудник ${target} награждается благодарностью.\n\nПодпись: ${author}`;
+                        break;
+                }
+
+                formResult.textContent = docText;
+                formResult.style.display = 'block';
+                
+                // Добавляем в чат
+                addMessage('✅ Документ сгенерирован:', 'bot', true);
+                addMessage(docText, 'bot', true);
+            }
+
+            // ========== ЧАТ ==========
+            sendBtn.addEventListener('click', () => {
+                const text = chatInput.value.trim();
+                if (!text) return;
+                
+                addMessage(text, 'user');
+                chatInput.value = '';
+                
+                setTimeout(() => {
+                    const reply = getBotReply(text);
+                    addMessage(reply, 'bot');
+                }, 500);
+            });
+
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendBtn.click();
+            });
+
+            // ========== УПРАВЛЕНИЕ ФОРМОЙ ==========
+            showFormBtn.addEventListener('click', () => {
+                documentForm.style.display = 'block';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
+
+            hideFormBtn.addEventListener('click', () => {
+                documentForm.style.display = 'none';
+                formResult.style.display = 'none';
+            });
+
+            generateDoc.addEventListener('click', generateDocument);
+
+            // ========== ПОДСКАЗКИ ==========
+            const suggestions = [
+                'Кто такие Unity Devs?',
+                'Как создать выговор?',
+                'Что такое УК?',
+                'Правила повышения',
+                'Контакты разработчиков',
+                'Размеры штрафов',
+                'Что делать при ДТП?',
+                'Ранги в ГИБДД'
+            ];
+
+            suggestions.forEach(text => {
+                const chip = document.createElement('span');
+                chip.className = 'suggestion-chip';
+                chip.textContent = text;
+                chip.onclick = () => {
+                    chatInput.value = text;
+                    sendBtn.click();
+                };
+                suggestionChips.appendChild(chip);
+            });
 
             // ========== НАВИГАЦИЯ ==========
             document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -1422,146 +1279,12 @@
                 });
             });
 
-            // ========== ЧАТ ==========
-            const chatMessages = document.getElementById('chatMessages');
-            const chatInput = document.getElementById('chatInput');
-            const sendBtn = document.getElementById('sendChatBtn');
-
-            function addMessage(text, sender) {
-                const msg = document.createElement('div');
-                msg.className = `msg ${sender === 'user' ? 'user-msg' : 'bot-msg'}`;
-                msg.textContent = text;
-                chatMessages.appendChild(msg);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-
-            sendBtn.addEventListener('click', () => {
-                const text = chatInput.value.trim();
-                if (!text) return;
-                
-                addMessage(text, 'user');
-                chatInput.value = '';
-                
-                setTimeout(() => {
-                    let reply = 'Извините, я не совсем понял.';
-                    const q = text.toLowerCase();
-                    
-                    if (q.includes('привет') || q.includes('здравствуйте')) {
-                        reply = 'Здравствуйте! Чем могу помочь?';
-                    } else if (q.includes('закон') || q.includes('ук') || q.includes('ак') || q.includes('пдд')) {
-                        reply = 'Законы можно найти на вкладке "Законы".';
-                    } else if (q.includes('устав') || q.includes('ранг') || q.includes('повышение')) {
-                        reply = 'Устав и система рангов на вкладке "Устав".';
-                    } else if (q.includes('заявк')) {
-                        reply = `Всего заявок: ${database.applications.length}`;
-                    } else if (q.includes('сотрудник') || q.includes('руководство')) {
-                        reply = database.staff.map(s => `${s.name} - ${s.rank}`).join('\n');
-                    } else if (q.includes('форум')) {
-                        reply = database.forum.title;
-                    } else if (q.includes('спасибо')) {
-                        reply = 'Пожалуйста! Обращайтесь ещё.';
-                    }
-                    
-                    addMessage(reply, 'bot');
-                }, 500);
-            });
-
-            chatInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') sendBtn.click();
-            });
-
-            // ========== ЗАГРУЗКА ФАЙЛОВ ==========
-            const fileInput = document.getElementById('fileInput');
-            const fileList = document.getElementById('fileList');
-            const uploadArea = document.getElementById('fileUploadArea');
-            let selectedFiles = [];
-
-            function handleFiles(files) {
-                selectedFiles = [...selectedFiles, ...Array.from(files).filter(f => f.type.startsWith('image/'))];
-                renderFilePreviews();
-            }
-
-            function renderFilePreviews() {
-                fileList.innerHTML = '';
-                selectedFiles.forEach((file, index) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const preview = document.createElement('div');
-                        preview.className = 'file-preview';
-                        preview.innerHTML = `
-                            <img src="${e.target.result}">
-                            <div class="remove-file" onclick="window.removeFile(${index})">×</div>
-                        `;
-                        fileList.appendChild(preview);
-                    };
-                    reader.readAsDataURL(file);
-                });
-            }
-
-            window.removeFile = function(index) {
-                selectedFiles.splice(index, 1);
-                renderFilePreviews();
-            };
-
-            fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
-            
-            if (uploadArea) {
-                uploadArea.addEventListener('click', () => fileInput.click());
-                uploadArea.addEventListener('dragover', (e) => e.preventDefault());
-                uploadArea.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    handleFiles(e.dataTransfer.files);
-                });
-            }
-
-            // ========== СОЗДАНИЕ ЗАЯВКИ ==========
-            document.getElementById('submitAppBtn').addEventListener('click', async () => {
-                try {
-                    const author = document.getElementById('appAuthor').value.trim() || 'Гость';
-                    const title = document.getElementById('appTitle').value.trim();
-                    const text = document.getElementById('appText').value.trim();
-
-                    if (!title || !text) {
-                        showNotification('❌ Заполните заголовок и текст', true);
-                        return;
-                    }
-
-                    const images = await Promise.all(selectedFiles.map(file => new Promise(resolve => {
-                        const reader = new FileReader();
-                        reader.onload = (e) => resolve(e.target.result);
-                        reader.readAsDataURL(file);
-                    })));
-
-                    const newApp = {
-                        id: Date.now(),
-                        author: author,
-                        title: title,
-                        text: text,
-                        images: images,
-                        date: new Date().toLocaleString()
-                    };
-
-                    database.applications.unshift(newApp);
-                    saveData();
-                    
-                    document.getElementById('appTitle').value = '';
-                    document.getElementById('appText').value = '';
-                    selectedFiles = [];
-                    renderFilePreviews();
-                    renderApplications();
-                    
-                    showNotification('✅ Заявка создана!', false);
-                } catch (e) {
-                    showNotification('❌ Ошибка: ' + e.message, true);
-                }
-            });
-
             // ========== ЗАПУСК ==========
             if (localStorage.getItem('gibdd_user')) {
                 currentUser = localStorage.getItem('gibdd_user');
             }
 
-            init();
+            loadData();
 
             // Обработчики авторизации
             document.getElementById('loginSubmitBtn').addEventListener('click', login);
