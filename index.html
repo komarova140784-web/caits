@@ -170,6 +170,11 @@
             margin-top: 1rem;
         }
 
+        .modal-btn:hover {
+            background: #0077ff;
+            box-shadow: 0 0 20px #0077ff;
+        }
+
         .modal-error {
             color: #ff6b6b;
             text-align: center;
@@ -898,10 +903,11 @@
     <script>
         (function() {
             // ========== НАСТРОЙКИ JSONBIN ==========
-            const BIN_ID = '6995aa8bd0ea881f40c3ce9b'; // Это твой личный BIN
-            const API_KEY = '$2a$10$QxbPOaLpkwmNoch1L7GuF.R8oyp9hFo/1WmikvmyNUChAAWryyd4e'; // Твой API ключ
-            const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
-            const UPDATE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+            const BIN_ID = '6995aa8bd0ea881f40c3ce9b'; // Твой Bin ID
+            const API_KEY = '$2a$10$fOyv4kKjTIMcbIBVQiwCjeZCq0nPqTI8VxL.5jmOUgFigOQNK27JK'; // Твой API ключ
+            
+            // Правильные URL для JSONBin API [citation:2]
+            const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
             
             // ========== ЛОКАЛЬНЫЕ КЛЮЧИ ==========
             const LOCAL_BACKUP_KEY = 'gibdd_local_backup';
@@ -939,7 +945,6 @@
             let database = JSON.parse(JSON.stringify(defaultData));
             let currentUser = null;
             let syncInProgress = false;
-            let lastCloudVersion = 0;
 
             // ========== ЭЛЕМЕНТЫ ==========
             const notification = document.getElementById('notification');
@@ -958,14 +963,14 @@
             // ========== ИНИЦИАЛИЗАЦИЯ ==========
             function init() {
                 loadLocalBackup();
-                syncWithCloud();
+                syncFromCloud(); // Сначала загружаем из облака
                 
-                // Синхронизация каждые 5 секунд
-                setInterval(syncWithCloud, 5000);
+                // Синхронизация каждые 10 секунд
+                setInterval(syncFromCloud, 10000);
                 
                 // Кнопка ручной синхронизации
                 syncBtn.addEventListener('click', () => {
-                    syncWithCloud(true);
+                    syncFromCloud(true);
                 });
                 
                 // Обновляем версию
@@ -980,7 +985,7 @@
                         const parsed = JSON.parse(saved);
                         if (parsed && parsed.forum && parsed.staff) {
                             database = parsed;
-                            showNotification('📦 Загружено локально');
+                            console.log('Локальная копия загружена');
                         }
                     }
                 } catch (e) {
@@ -998,15 +1003,15 @@
                 }
             }
 
-            // ========== СИНХРОНИЗАЦИЯ С ОБЛАКОМ ==========
-            async function syncWithCloud(manual = false) {
+            // ========== ЗАГРУЗКА ИЗ ОБЛАКА ==========
+            async function syncFromCloud(manual = false) {
                 if (syncInProgress) return;
                 
                 syncInProgress = true;
-                cloudStatus.textContent = '☁️ Синхронизация...';
+                cloudStatus.textContent = '☁️ Загрузка...';
                 
                 try {
-                    // Загружаем данные из облака
+                    // Правильный GET запрос к JSONBin [citation:2]
                     const response = await fetch(BIN_URL, {
                         method: 'GET',
                         headers: {
@@ -1016,29 +1021,28 @@
                     
                     if (response.ok) {
                         const data = await response.json();
+                        // JSONBin возвращает данные в поле 'record' [citation:2]
                         const cloudData = data.record;
                         
                         if (cloudData && cloudData.version) {
-                            // Сравниваем версии
-                            const cloudVersion = parseInt(cloudData.version.replace(/[^0-9]/g, '')) || 0;
-                            const localVersion = parseInt(database.version.replace(/[^0-9]/g, '')) || 0;
+                            // Сравниваем количество заявок
+                            const cloudAppsCount = cloudData.applications?.length || 0;
+                            const localAppsCount = database.applications?.length || 0;
                             
-                            if (cloudVersion > localVersion) {
-                                // Облако новее - загружаем
+                            if (cloudAppsCount !== localAppsCount || manual) {
                                 database = cloudData;
                                 saveLocalBackup();
                                 renderAll();
                                 showNotification('☁️ Загружено из облака');
-                            } else if (localVersion > cloudVersion && manual) {
-                                // Локально новее и это ручная синхронизация - отправляем в облако
-                                await updateCloud();
+                                console.log('Синхронизация успешна');
                             }
                         }
                     } else {
-                        // Если не удалось загрузить, пробуем отправить
-                        if (manual) {
-                            await updateCloud();
-                        }
+                        console.error('Ошибка загрузки из облака:', response.status);
+                        cloudStatus.textContent = '☁️ Ошибка';
+                        setTimeout(() => {
+                            cloudStatus.textContent = '☁️ Облако';
+                        }, 3000);
                     }
                 } catch (e) {
                     console.error('Ошибка синхронизации:', e);
@@ -1053,14 +1057,17 @@
             }
 
             // ========== ОТПРАВКА В ОБЛАКО ==========
-            async function updateCloud() {
+            async function syncToCloud() {
                 try {
+                    cloudStatus.textContent = '☁️ Отправка...';
+                    
                     // Обновляем версию
                     const versionNum = parseInt(database.version.replace(/[^0-9]/g, '')) || 0;
                     database.version = `1.0.${versionNum + 1}`;
                     database.lastCloudSync = Date.now();
                     
-                    const response = await fetch(UPDATE_URL, {
+                    // PUT запрос для обновления bin [citation:2]
+                    const response = await fetch(BIN_URL, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -1073,17 +1080,22 @@
                         saveLocalBackup();
                         showNotification('☁️ Отправлено в облако');
                         versionDisplay.textContent = `v${database.version}`;
+                        console.log('Отправка в облако успешна');
+                    } else {
+                        console.error('Ошибка отправки:', response.status);
                     }
                 } catch (e) {
                     console.error('Ошибка отправки в облако:', e);
                 }
+                
+                cloudStatus.textContent = '☁️ Облако';
             }
 
             // ========== СОХРАНЕНИЕ ДАННЫХ ==========
             function saveData() {
                 saveLocalBackup();
-                // Запускаем синхронизацию с облаком
-                setTimeout(() => syncWithCloud(true), 500);
+                // Отправляем в облако
+                setTimeout(() => syncToCloud(), 500);
                 showNotification('✅ Сохранено');
             }
 
